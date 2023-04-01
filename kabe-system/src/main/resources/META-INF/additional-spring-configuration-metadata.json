@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "mail.verification-code.length",
+      "type": "java.lang.Integer",
+      "description": "生成验证码的长度."
+  }
+] }
