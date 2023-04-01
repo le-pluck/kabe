@@ -9,7 +9,9 @@ const items = reactive(["用户", "标签", "查找"]);
       <v-btn> New Post </v-btn>
     </div>
 
-    <v-divider></v-divider>
+    <div class="divider-wrap">
+      <v-divider></v-divider>
+    </div>
 
     <div class="sidebar-area">
       <v-list>
@@ -27,6 +29,9 @@ const items = reactive(["用户", "标签", "查找"]);
 .sidebar {
   .sidebar-area {
     padding: 0 global.$area-padding global.$area-padding global.$area-padding;
+  }
+  .divider-wrap {
+    padding: 0 0 global.$area-padding 0;
   }
 }
 </style>

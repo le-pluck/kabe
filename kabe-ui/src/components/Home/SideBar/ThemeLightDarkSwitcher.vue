@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiThemeLightDark } from "@mdi/js";
-import { useTheme } from 'vuetify';
+import { useTheme } from "vuetify";
 
 const theme = useTheme();
 
 const toggleTheme = () => {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
-}
-
+  theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
+};
 </script>
 
 <template>
