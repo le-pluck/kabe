@@ -2,5 +2,7 @@
 </script>
 
 <template>
-  <v-app-bar app> appbar </v-app-bar>
+  <v-app-bar app> 
+    
+  </v-app-bar>
 </template>
