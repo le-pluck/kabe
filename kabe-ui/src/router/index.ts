@@ -1,13 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import Layout from "../components/Layout.vue";
-import HelloWorld from "../components/HelloWorld.vue";
-import LayoutDrawer from "../components/LayoutDrawer.vue";
+import Home from "@/views/Home.vue";
 
 const routes = [
-  { path: "/", component: Layout },
-  { path: "/layout-drawer", component: LayoutDrawer },
-  { path: "/hello-world", component: HelloWorld },
+  { path: "/", component: Home },
 ];
 
 const router = createRouter({
