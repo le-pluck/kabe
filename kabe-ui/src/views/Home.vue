@@ -34,7 +34,7 @@ import PostList from "@/components/Home/PostList.vue";
     padding: 0 global.$layout-padding;
     display: flex;
     .side-bar-wrap {
-      flex: 0 0 auto;
+      flex: 0 1 auto;
       position: sticky;
       top: 64px;
       width: 280px;
@@ -42,7 +42,7 @@ import PostList from "@/components/Home/PostList.vue";
       padding: global.$area-padding 0;
     }
     .post-list-wrap {
-      flex: 1 0 auto;
+      flex: 1 10 auto;
       padding: global.$area-padding;
     }
   }
