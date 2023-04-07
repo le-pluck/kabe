@@ -1,3 +1,4 @@
+# DataSource Config
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -9,9 +10,11 @@ spring:
 #      mode: never
 #      schema-locations: classpath:db/schema.sql  # this feature is not enabled for now
 #      data-locations: classpath:db/data.sql  # this feature is not enabled for now
+
+
+# Mybatis-Plus
 mybatis-plus:
-  mapper-locations: classpath*:mapper/*.xml
-  type-aliases-package: com.example.kabesystem.model.test
   configuration:
-    map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # ??sql??
+  mapper-locations: classpath:com/example/kabesystem/mapper/*.java
+  type-aliases-package: mapper??
