@@ -13,8 +13,9 @@ spring:
   mail:
     host: smtp.163.com
     username: plucknets@163.com
-    password: TOPluck666
+    password: RLJGCWQKGTFHOESU
     default-encoding: utf-8
+
 
 # Mybatis-Plus
 mybatis-plus:
@@ -25,3 +26,6 @@ mybatis-plus:
 mail:
   verification-code:
     length: 5
+  from-address: plucknets@163.com
+  subject:
+    verification: 验证 Kabe 的电子邮件地址
