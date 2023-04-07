@@ -3,6 +3,6 @@
     {
       "name": "mail.verification-code.length",
       "type": "java.lang.Integer",
-      "description": "Description for mail.verification-code.length."
+      "description": "生成验证码的长度."
   }
 ] }

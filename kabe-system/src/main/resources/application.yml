@@ -21,3 +21,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+# Custom configuration items
+mail:
+  verification-code:
+    length: 5
