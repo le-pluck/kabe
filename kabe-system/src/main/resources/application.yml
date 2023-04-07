@@ -10,11 +10,14 @@ spring:
 #      mode: never
 #      schema-locations: classpath:db/schema.sql  # this feature is not enabled for now
 #      data-locations: classpath:db/data.sql  # this feature is not enabled for now
-
+  mail:
+    host: smtp.163.com
+    username: plucknets@163.com
+    password: TOPluck666
+    default-encoding: utf-8
 
 # Mybatis-Plus
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # ??sql??
-  mapper-locations: classpath:com/example/kabesystem/mapper/*.java
-  type-aliases-package: mapper??
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
