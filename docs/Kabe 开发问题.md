@@ -1,4 +1,4 @@
-# Kabe 开发问题集合
+# Kabe 开发问题
 
 ## Vue 3 Project
 
