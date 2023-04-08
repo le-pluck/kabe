@@ -3,15 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <title> 邮箱验证码 </title>
+    <style>
+        .mail-wrap {
+            background: #f9f9f9;
+        }
+
+        .mail {
+            max-width: 640px;
+            margin: auto;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: Arial, monospace;
+            color: #9980fa;
+            padding: 40px 0;
+        }
+
+        .card {
+            padding: 40px 50px;
+            background: #ffffff;
+            border-radius: 10px;
+        }
+
+        .card h1 {
+            color: #4f545c;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .card .context {
+            color: #737f8d;
+            font-size: 16px;
+        }
+
+        .card .code {
+            width: fit-content;
+            margin: 30px auto;
+            color: #151d29;
+            font-size: 36px;
+            font-weight: bold;
+            background: #f2f2f2;
+            padding: 16px 24px;
+            border-radius: 10px;
+        }
+
+        .card .divider {
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+
+        .card .divider hr {
+            border-color: rgba(0, 0, 0, .12);
+            margin: 0;
+        }
+        .card .enjoy {
+            border-left: #9980fa solid 4px;
+            padding: 20px 20px 20px 30px;
+            color: #576574;
+            font-family: 'Motiva Sans', Arial, sans-serif;
+        }
+
+        .card .not-me {
+            padding: 10px 0 30px 0;
+            color: #576574;
+            font-family: 'Motiva Sans', Arial, sans-serif;
+        }
+
+        .help {
+            color: #8395a7;
+            padding: 20px;
+        }
+
+        .footer {
+            color: #8395a7;
+            padding-top: 30px;
+            padding-bottom: 60px;
+            text-align: center;
+        }
+
+        .mail-wrap *:link {
+            color: #70a1ff;
+        }
+        .mail-wrap *:visited {
+            color: #9cbeff;
+        }
+    </style>
 </head>
 <body>
-    <h1>嗨 [[${username}]]</h1>
-    <div>
-        谢谢您注册Kabe账号！在开始之前，我们需要确认您的身份。这是您的验证码:
+<div class="mail-wrap">
+    <div class="mail">
+        <div class="logo">
+            <span>Kabe</span>
+        </div>
+        <div class="card">
+            <h1>嗨 [[${username}]]</h1>
+            <div class="context">
+                谢谢您注册 Kabe 账号！在开始之前，我们需要确认您的身份。这是您的验证码:
+            </div>
+            <div class="code">
+                [[${verificationCode}]]
+            </div>
+            <div class="divider">
+                <hr>
+            </div>
+            <div class="not-me">
+                <div style="font-size: 20px; font-weight: bold;">
+                    不是您？
+                </div>
+                <div>
+                    您会收到这封电子邮件，是由于有人试图用您的邮箱注册 Kabe 账号。
+                </div>
+                <div>
+                    如果这不是您尝试登录，请忽略此邮件。
+                </div>
+                <div>
+                    此电子邮件包含一个登录代码，您需要用它验证您的帐户。切勿与任何人分享此代码。
+                </div>
+            </div>
+            <div class="enjoy">
+                祝您愉快,
+                <br>
+                Kabe 团队
+            </div>
+        </div>
+        <div class="footer">
+            <div class="help">
+                此通知已发送至与您的 Kabe 帐户关联的电子邮件地址。
+            </div>
+            <div class="help">
+                这封电子邮件由系统自动生成，请勿回复。如果您需要额外帮助，请联系我们的支持团队或在微博上找找我们
+                <a href="https://weibo.com/lepluck">@le-pluck</a>
+                。
+            </div>
+        </div>
     </div>
-    <h2>[[${verificationCode}]]</h2>
-    <div>
-        由 Kabe 发送
-    </div>
+</div>
 </body>
 </html>
