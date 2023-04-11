@@ -1,13 +1,9 @@
 <script lang="ts" setup>
-import Hearder from "@/components/Hearder.vue";
-import Footer from "@/components/Footer.vue";
 import Sidebar from "@/components/Home/SideBar/Sidebar.vue";
 import PostList from "@/components/Home/PostList.vue";
 </script>
 
 <template>
-  <Hearder></Hearder>
-
   <v-main class="main">
     <div class="main-container">
       <div class="side-bar-wrap">
@@ -18,7 +14,6 @@ import PostList from "@/components/Home/PostList.vue";
       </div>
     </div>
   </v-main>
-  <Footer></Footer>
 </template>
 
 <style lang="scss" scoped>

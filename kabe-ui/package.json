@@ -13,6 +13,7 @@
     "@mdi/font": "5.9.55",
     "@mdi/js": "^7.2.96",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "@vueup/vue-quill": "^1.1.1",
     "roboto-fontface": "*",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ThemeLightDarkSwitcher from "./Home/SideBar/ThemeLightDarkSwitcher.vue";
+import ThemeLightDarkSwitcher from "./Header/ThemeLightDarkSwitcher.vue";
 import vueLogo from "@/assets/vue.svg";
 </script>
 
@@ -10,6 +10,9 @@ import vueLogo from "@/assets/vue.svg";
         <v-img :src="vueLogo" class="logo"></v-img>
       </div>
       <div class="right">
+        <router-link to="/"><v-btn> Home </v-btn></router-link>
+        <router-link to="/post"><v-btn> Post </v-btn></router-link>
+        <router-link to="/sign"><v-btn> Sign </v-btn></router-link>
         <theme-light-dark-switcher></theme-light-dark-switcher>
       </div>
     </div>
