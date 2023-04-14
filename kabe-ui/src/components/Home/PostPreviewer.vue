@@ -19,7 +19,7 @@ const props = defineProps<Props>();
     class="previewer"
   >
     <v-card-actions>
-      <v-btn>Click me</v-btn>
+      <router-link to="post"><v-btn>Click Me</v-btn></router-link>
     </v-card-actions>
   </v-card>
 </template>

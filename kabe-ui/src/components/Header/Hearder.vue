@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import ThemeLightDarkSwitcher from "./Header/ThemeLightDarkSwitcher.vue";
+import ThemeLightDarkSwitcher from "@/components/header/ThemeLightDarkSwitcher.vue";
 import vueLogo from "@/assets/vue.svg";
+
+export interface Props {}
 </script>
 
 <template>
@@ -12,7 +14,15 @@ import vueLogo from "@/assets/vue.svg";
       <div class="right">
         <router-link to="/"><v-btn> Home </v-btn></router-link>
         <router-link to="/post"><v-btn> Post </v-btn></router-link>
-        <router-link to="/sign"><v-btn> Sign </v-btn></router-link>
+        <router-link to="/sign-in"><v-btn> sign-in </v-btn></router-link>
+        <router-link to="/sign-up"><v-btn> sign-up </v-btn></router-link>
+        <span>|</span>
+        <v-btn variant="outlined"> Create Post </v-btn>
+        <v-avatar
+          image="https://robohash.org/1.png?set=set4&size=150x150&bgset=bg2"
+          class="avatar"
+        ></v-avatar>
+        |
         <theme-light-dark-switcher></theme-light-dark-switcher>
       </div>
     </div>
@@ -38,6 +48,12 @@ import vueLogo from "@/assets/vue.svg";
   .right {
     flex: 0 0 auto;
     margin-left: auto;
+    > * {
+      margin: 0 10px 0 0;
+    }
+    .avatar {
+      margin: 0 10px;
+    }
   }
 }
 </style>

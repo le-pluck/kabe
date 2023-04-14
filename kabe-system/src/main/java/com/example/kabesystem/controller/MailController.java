@@ -1,6 +1,6 @@
 package com.example.kabesystem.controller;
 
-import com.example.kabesystem.service.MailService;
+import com.example.kabesystem.service.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

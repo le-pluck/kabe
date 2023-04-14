@@ -1,3 +1,6 @@
+#server.port: 7778
+
+
 # DataSource Config
 spring:
   datasource:
@@ -29,3 +32,6 @@ mail:
   from-address: plucknets@163.com
   subject:
     verification: 验证 Kabe 的电子邮件地址
+jwt:
+  secret: Les_passionnés_de_technologie_font_avancer_le_monde
+  expiration: 172800000
