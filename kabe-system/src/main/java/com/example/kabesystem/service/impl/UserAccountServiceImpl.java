@@ -1,11 +1,11 @@
-package com.example.kabesystem.service.impl.user;
+package com.example.kabesystem.service.impl;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.kabesystem.mapper.user.UserAccountMapper;
-import com.example.kabesystem.model.user.UserAccount;
-import com.example.kabesystem.service.user.UserAccountService;
+import com.example.kabesystem.mapper.UserAccountMapper;
+import com.example.kabesystem.model.UserAccount;
+import com.example.kabesystem.service.UserAccountService;
 import com.example.kabesystem.util.JwtUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;

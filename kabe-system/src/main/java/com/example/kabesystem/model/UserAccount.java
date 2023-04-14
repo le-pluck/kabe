@@ -1,4 +1,4 @@
-package com.example.kabesystem.model.user;
+package com.example.kabesystem.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

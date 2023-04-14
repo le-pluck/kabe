@@ -1,7 +1,7 @@
-package com.example.kabesystem.service.impl.mail;
+package com.example.kabesystem.service.impl;
 
-import com.example.kabesystem.service.mail.MailService;
-import com.example.kabesystem.service.mail.VerificationCodeService;
+import com.example.kabesystem.service.MailService;
+import com.example.kabesystem.service.VerificationCodeService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;

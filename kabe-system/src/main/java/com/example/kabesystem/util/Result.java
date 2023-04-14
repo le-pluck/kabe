@@ -11,7 +11,15 @@ public class Result<T> {
     public T data;
 
     public static <T> Result<T> success(T data) {
-        return new Result<>(200, "success", data);
+        return new Result<>(200, "请求成功", data);
+    }
+
+    public static <T> Result<T> postSuccess(T data) {
+        return new Result<>(201, "该请求已成功，并因此创建了一个新的资源。", data);
+    }
+
+    public static <T> Result<T> success(int code, String msg, T data) {
+        return new Result<>(code, msg, data);
     }
 
     public static <T> Result<T> failure(int code, String msg, T data) {

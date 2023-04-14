@@ -1,17 +1,14 @@
 package com.example.kabesystem.util;
 
 import com.auth0.jwt.interfaces.Claim;
-import com.example.kabesystem.model.user.UserAccount;
+import com.example.kabesystem.model.UserAccount;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

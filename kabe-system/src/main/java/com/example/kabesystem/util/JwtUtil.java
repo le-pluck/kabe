@@ -5,7 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.kabesystem.model.user.UserAccount;
+import com.example.kabesystem.model.UserAccount;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -64,6 +64,13 @@ public class JwtUtil {
             return null;
         }
         return decodedJWT.getClaims();
+    }
+
+    public static String bearerToken(String token) {
+        if (token.startsWith("Bearer ")) {
+            return token.substring(7);
+        }
+        return null;
     }
 
 }

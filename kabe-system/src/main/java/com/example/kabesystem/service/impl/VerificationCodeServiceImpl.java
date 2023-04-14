@@ -1,6 +1,6 @@
-package com.example.kabesystem.service.impl.mail;
+package com.example.kabesystem.service.impl;
 
-import com.example.kabesystem.service.mail.VerificationCodeService;
+import com.example.kabesystem.service.VerificationCodeService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

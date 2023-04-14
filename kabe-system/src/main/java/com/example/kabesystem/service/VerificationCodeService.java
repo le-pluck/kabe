@@ -1,4 +1,4 @@
-package com.example.kabesystem.service.mail;
+package com.example.kabesystem.service;
 
 import org.springframework.stereotype.Service;
 
