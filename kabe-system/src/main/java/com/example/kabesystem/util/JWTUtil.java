@@ -14,19 +14,19 @@ import java.util.Map;
 import java.util.HashMap;
 
 @Component
-public class JwtUtil {
+public class JWTUtil {
     private static String SECRET;
 
     @Value("${jwt.secret}")
     public void setSECRET(String secret) {
-        JwtUtil.SECRET = secret;
+        JWTUtil.SECRET = secret;
     }
 
     private static Long EXPIRATION;
 
     @Value("${jwt.expiration}")
     public void setEXPIRATION(Long expiration) {
-        JwtUtil.EXPIRATION = expiration;
+        JWTUtil.EXPIRATION = expiration;
     }
 
     public static void pickValue() {

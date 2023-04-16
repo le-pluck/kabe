@@ -21,7 +21,7 @@ public class TokenCheckInterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(tokenCheckInterceptor)
-                .addPathPatterns("/user/account/**")
+                .addPathPatterns("/user/**")
                 .excludePathPatterns("/user/account/token");
     }
 }

@@ -2,7 +2,7 @@ package com.example.kabesystem.interceptor;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.example.kabesystem.service.UserAccountService;
-import com.example.kabesystem.util.JwtUtil;
+import com.example.kabesystem.util.JWTUtil;
 import com.example.kabesystem.util.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,7 +31,7 @@ public class TokenCheckInterceptor implements HandlerInterceptor {
         }
 
         String authorization = request.getHeader("authorization");
-        String bearerToken = JwtUtil.bearerToken(authorization);
+        String bearerToken = JWTUtil.bearerToken(authorization);
         String token = (bearerToken != null) ? bearerToken : authorization;
 
         Map<String, Claim> claimMap = userAccountService.verifyToken(token);

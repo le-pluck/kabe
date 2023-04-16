@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.CacheConfig;
 @AllArgsConstructor
 public class Result<T> {
     public int code;
-    public String msg;
+    public String message;
     public T data;
 
     public static <T> Result<T> success(T data) {
@@ -30,7 +30,7 @@ public class Result<T> {
     public String toString() {
         return "{" +
                 "    \"code\": " + code + ",\n" +
-                "    \"msg\": \"" + msg + "\",\n" +
+                "    \"msg\": \"" + message + "\",\n" +
                 "    \"data\": " + data + "\n" +
                 '}';
     }

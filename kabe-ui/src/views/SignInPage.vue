@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import apis, { userTokenApi } from "@/http/apis";
+import { userAccountApi } from "@/apis";
 import ThemeLightDarkSwitcher from "@/components/header/ThemeLightDarkSwitcher.vue";
 import { reactive } from "vue";
 
@@ -51,9 +51,12 @@ const userAccount: UserAccount = reactive({
 
 const login = async () => {
   if (!formValidation.valid) return;
-  const data = await userTokenApi.login({ username: userAccount.username, password: userAccount.password });
-  localStorage.setItem("token", data.token);
-  console.log("res = await userTokenApi.login: ", data);
+
+  const token = await userAccountApi.login({
+    username: userAccount.username,
+    password: userAccount.password,
+  });
+  localStorage.setItem("token", token);
 };
 </script>
 

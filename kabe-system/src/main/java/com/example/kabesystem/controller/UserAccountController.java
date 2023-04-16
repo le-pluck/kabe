@@ -36,10 +36,10 @@ public class UserAccountController {
     }
 
     @GetMapping("/any")
-    public Map<String, Object> getAny(@RequestAttribute String token, @RequestAttribute Long userId) {
+    public Result<Map<String, Object>> getAny(@RequestAttribute String token, @RequestAttribute Long userId) {
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
         map.put("userId", userId);
-        return map;
+        return Result.success(map);
     }
 }

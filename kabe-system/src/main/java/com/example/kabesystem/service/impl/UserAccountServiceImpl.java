@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.kabesystem.mapper.UserAccountMapper;
 import com.example.kabesystem.model.UserAccount;
 import com.example.kabesystem.service.UserAccountService;
-import com.example.kabesystem.util.JwtUtil;
+import com.example.kabesystem.util.JWTUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -45,11 +45,11 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
 
     @Override
     public String issueToken(UserAccount userAccount) {
-        return JwtUtil.issueToken(userAccount);
+        return JWTUtil.issueToken(userAccount);
     }
 
     @Override
     public Map<String, Claim> verifyToken(String token) {
-        return JwtUtil.verifyToken(token);
+        return JWTUtil.verifyToken(token);
     }
 }

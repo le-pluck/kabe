@@ -12,10 +12,10 @@ import java.util.Map;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-class JwtUtilTest {
+class JWTUtilTest {
 
     @Resource
-    private JwtUtil jwtUtil;
+    private JWTUtil jwtUtil;
 
     @Test
     void verifyToken() {
@@ -23,9 +23,9 @@ class JwtUtilTest {
         userAccount.setId(114514L);
         userAccount.setUsername("jinx");
 
-        String token = JwtUtil.issueToken(userAccount);
+        String token = JWTUtil.issueToken(userAccount);
 
-        Map<String, Claim> claims = JwtUtil.verifyToken(token);
+        Map<String, Claim> claims = JWTUtil.verifyToken(token);
 
         assert claims != null;
         System.out.println(claims.toString());
@@ -33,6 +33,6 @@ class JwtUtilTest {
 
     @Test
     void pickValue() {
-        JwtUtil.pickValue();
+        JWTUtil.pickValue();
     }
 }
