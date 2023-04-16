@@ -10,7 +10,7 @@ public class MailController {
     @Autowired
     MailService mailService;
 
-    @PostMapping("/send-verification-mail")
+    @PostMapping("/verification")
     private boolean sendVerificationMail(@RequestParam String addressee, @RequestParam String username) {
         return mailService.sendVerificationMail(addressee, username);
     }

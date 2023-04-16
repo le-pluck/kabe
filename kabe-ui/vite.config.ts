@@ -18,4 +18,15 @@ export default defineConfig({
       "@icons": resolve("src/assets/images/icons"),
     },
   },
+  server: {
+    open: true,
+    cors: true,
+    proxy: {
+      "/api": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });
