@@ -12,7 +12,7 @@ export interface Props {}
         <v-img :src="vueLogo" class="logo"></v-img>
       </div>
       <div class="right">
-        <router-link to="/"><v-btn> Home </v-btn></router-link>
+        <router-link to="/home"><v-btn> Home </v-btn></router-link>
         <router-link to="/post"><v-btn> Post </v-btn></router-link>
         <router-link to="/sign-in"><v-btn> sign-in </v-btn></router-link>
         <router-link to="/sign-up"><v-btn> sign-up </v-btn></router-link>

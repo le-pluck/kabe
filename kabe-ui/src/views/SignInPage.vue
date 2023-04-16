@@ -2,6 +2,9 @@
 import { userAccountApi } from "@/apis";
 import ThemeLightDarkSwitcher from "@/components/header/ThemeLightDarkSwitcher.vue";
 import { reactive } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 type ValidationResult = string | boolean;
 type ValidationRule =
@@ -57,6 +60,7 @@ const login = async () => {
     password: userAccount.password,
   });
   localStorage.setItem("token", token);
+  router.push("/home");
 };
 </script>
 
