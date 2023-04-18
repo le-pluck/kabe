@@ -2,13 +2,7 @@
 import { reactive, ref, Ref } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import Delta from "quill-delta";
-import { Post } from "@/apis/post/class";
-
-import post2json from "@/assets/post2.json";
-import userAccount from "@/apis/userAccount";
-
-
-const post2 = new Post(post2json);
+import { nextTick } from "process";
 
 interface DeltaVary {
   delta: Delta;
@@ -21,13 +15,6 @@ interface EditorRef {
   setContents?: Function;
 }
 
-/**
- * // TODO:
- * 虽然可以做 api 测试
- * 但是还是先做一下“如何正确显示文章格式”（例如代码段格式）
- */
-
-
 const editor = ref<EditorRef>({});
 const innerHTML = ref<string>();
 let content = ref();
@@ -35,11 +22,6 @@ let content = ref();
 const onTextChange = ({ delta, oldContents, source }: DeltaVary) => {
   innerHTML.value = editor.value.getHTML?.();
   console.log("content", content.value);
-  console.log("innerHTML", { html: innerHTML.value });
-};
-
-const onReady = () => {
-  editor.value.setContents?.(post2.delta);
 };
 </script>
 
@@ -48,13 +30,13 @@ const onReady = () => {
     <v-container>
       <v-row>
         <v-col>
-          {{ post2.title }}
+          <v-text-field label="标题" variant="outlined"></v-text-field>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col>
-          {{ post2.subtitle }}
+          <v-textarea label="副标题" variant="outlined"></v-textarea>
         </v-col>
       </v-row>
 
@@ -66,7 +48,6 @@ const onReady = () => {
               v-model:content="content"
               ref="editor"
               @textChange="onTextChange"
-              @ready="onReady"
             />
           </div>
         </v-col>
@@ -74,7 +55,7 @@ const onReady = () => {
 
       <v-row>
         <v-col>
-          <div class="post-area" :innerHTML="post2.html"></div>
+          <v-btn block> 发布 </v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -86,6 +67,6 @@ const onReady = () => {
   padding-top: 40px;
 }
 .post-area {
-  border: 4px solid #91a1f7;
+  border: 1px solid #91a1f7;
 }
 </style>

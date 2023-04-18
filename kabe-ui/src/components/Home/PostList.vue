@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import PostPreviewer from "@/components/Home/PostPreviewer.vue";
+import PostPreviewer from "@/components/home/PostPreviewer.vue";
 import { reactive } from "vue";
 
 const posts = reactive([
