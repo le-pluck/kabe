@@ -1,6 +1,12 @@
 <script lang="ts" setup>
 import Sidebar from "@/components/home/sideBar/Sidebar.vue";
-import PostList from "@/components/home/PostList.vue";
+import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
+
+import { defineAsyncComponent } from "vue";
+
+const PostList = defineAsyncComponent(
+  () => import("@/components/home/PostList.vue")
+);
 </script>
 
 <template>
@@ -9,7 +15,14 @@ import PostList from "@/components/home/PostList.vue";
       <Sidebar></Sidebar>
     </div>
     <div class="post-list-wrap">
-      <PostList></PostList>
+      <Suspense>
+        <template #default>
+          <PostList></PostList>
+        </template>
+        <template #fallback>
+          <v-skeleton-loader></v-skeleton-loader>
+        </template>
+      </Suspense>
     </div>
   </div>
 </template>

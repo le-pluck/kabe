@@ -5,6 +5,11 @@ interface UserAccount {
   email?: string;
   isUploader?: boolean;
   isAdmin?: boolean;
+  nickname?: string;
+  avatar?: AvatarBase64;
 }
 
+interface UserInfo extends Omit<Required<UserAccount>, "password"> {}
+
 type BearerToken = string;
+type AvatarBase64 = string;

@@ -1,13 +1,16 @@
 import userAccount from "./userAccount";
 import post from "./post";
+import tag from "./tag";
 
 const apis = {
   userAccount,
-  post
+  post,
+  tag,
 };
 
 export {
   apis as default,
   userAccount as userAccountApi,
-  post as postApi
+  post as postApi,
+  tag as tagApi,
 };

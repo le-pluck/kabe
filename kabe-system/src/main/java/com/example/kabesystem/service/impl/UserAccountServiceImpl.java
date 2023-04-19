@@ -7,6 +7,7 @@ import com.example.kabesystem.mapper.UserAccountMapper;
 import com.example.kabesystem.model.UserAccount;
 import com.example.kabesystem.service.UserAccountService;
 import com.example.kabesystem.util.JWTUtil;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -51,5 +52,20 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     @Override
     public Map<String, Claim> verifyToken(String token) {
         return JWTUtil.verifyToken(token);
+    }
+
+    @Override
+    public UserAccount getInfo(Long id) {
+        UserAccount userAccount = baseMapper.selectById(id);
+        userAccount.setPassword(null);
+        return userAccount;
+    }
+
+    @Override
+    public String getAvatar(Long id) {
+        QueryWrapper<UserAccount> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("avatar");
+        queryWrapper.eq("id", id);
+        return baseMapper.selectOne(queryWrapper).getAvatar();
     }
 }

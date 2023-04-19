@@ -7,7 +7,6 @@ import { Post } from "@/apis/post/class";
 import post2json from "@/assets/post2.json";
 import userAccount from "@/apis/userAccount";
 
-
 const post2 = new Post(post2json);
 
 interface DeltaVary {
@@ -26,7 +25,6 @@ interface EditorRef {
  * 虽然可以做 api 测试
  * 但是还是先做一下“如何正确显示文章格式”（例如代码段格式）
  */
-
 
 const editor = ref<EditorRef>({});
 const innerHTML = ref<string>();
@@ -60,7 +58,7 @@ const onReady = () => {
 
       <v-row>
         <v-col>
-          <div class="post-area">
+          <div class="post-editor">
             <QuillEditor
               theme="snow"
               v-model:content="content"
@@ -74,7 +72,9 @@ const onReady = () => {
 
       <v-row>
         <v-col>
-          <div class="post-area" :innerHTML="post2.html"></div>
+          <div class="ql-snow">
+            <div class="post-viewer ql-editor" :innerHTML="post2.html"></div>
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -85,7 +85,12 @@ const onReady = () => {
 .container {
   padding-top: 40px;
 }
-.post-area {
+.post-editor {
   border: 4px solid #91a1f7;
 }
+.post-viewer {
+  border: 4px solid #91a1f7;
+  font-size: 22px;
+}
 </style>
+

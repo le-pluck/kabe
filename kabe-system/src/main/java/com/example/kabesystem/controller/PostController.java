@@ -6,6 +6,8 @@ import com.example.kabesystem.util.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/post")
 public class PostController {
@@ -22,6 +24,21 @@ public class PostController {
 
     @PostMapping("")
     public Result<?> postPost(@RequestBody Post post) {
-        return Result.postSuccess(postService.save(post));
+        return Result.postSuccess(postService.postPost(post));
+    }
+
+    @GetMapping("/preview/{id}")
+    public Result<?> getPostPreviewById(@PathVariable(value = "id") Long id) {
+        return Result.success(postService.selectById(id));
+    }
+
+    @GetMapping("/preview/latest")
+    public Result<?> getPostPreviewsLatestPaged(@RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
+        return Result.success(postService.getPostPreviewsLatestPaged(pageIndex, pageSize));
+    }
+
+    @GetMapping("/preview/poster/{posterId}")
+    public Result<?> getPostPreviewsByPosterId(@PathVariable(value = "posterId") Long posterId) {
+        return Result.success(postService.getPostPreviewsByPosterId(posterId));
     }
 }

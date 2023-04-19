@@ -35,6 +35,33 @@ public class UserAccountController {
         }
     }
 
+    @GetMapping("/avatar")
+    public Result<?> getAvatarCurrent(@RequestAttribute Long userId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("avatar", userAccountService.getAvatar(userId));
+        return Result.success(map);
+    }
+
+    @GetMapping("/avatar/{id}")
+    public Result<?> getAvatarById(@PathVariable(value = "id") Long id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("avatar", userAccountService.getAvatar(id));
+        return Result.success(map);
+    }
+
+    @GetMapping("/info")
+    public Result<?> getInfoCurrent(@RequestAttribute Long userId) {
+        UserAccount userAccount = userAccountService.getInfo(userId);
+        System.out.println("======================== userAccount.toString() ========================");
+        System.out.println(userAccount.toString());
+        return Result.success(userAccount);
+    }
+
+    @GetMapping("/info/{id}")
+    public Result<?> getInfoById(@PathVariable(value = "id") Long id) {
+        return Result.success(userAccountService.getInfo(id));
+    }
+
     @GetMapping("/any")
     public Result<Map<String, Object>> getAny(@RequestAttribute String token, @RequestAttribute Long userId) {
         Map<String, Object> map = new HashMap<>();

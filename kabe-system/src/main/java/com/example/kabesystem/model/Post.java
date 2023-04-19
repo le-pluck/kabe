@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.example.kabesystem.util.LongTextTypeHandler;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -24,11 +25,13 @@ public class Post {
     private List<Object> ops;
     @TableField(typeHandler = LongTextTypeHandler.class)
     private String html;
+    private Timestamp createTime;
+    private Timestamp updateTime;
 
     public Post() {
     }
 
-    public Post(Long id, Long posterId, String title, String subtitle, Integer reaction, Integer star, List<Object> ops, String html) {
+    public Post(Long id, Long posterId, String title, String subtitle, Integer reaction, Integer star, List<Object> ops, String html, Timestamp createTime, Timestamp updateTime) {
         this.id = id;
         this.posterId = posterId;
         this.title = title;
@@ -37,5 +40,7 @@ public class Post {
         this.star = star;
         this.ops = ops;
         this.html = html;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 }
