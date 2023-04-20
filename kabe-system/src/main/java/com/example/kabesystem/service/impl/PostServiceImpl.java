@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements PostService {
@@ -21,11 +23,15 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     }
 
     @Override
-    public int postPost(Post post) {
+    public Long postPost(Post post, Long posterId) {
         Timestamp timestamp = new Timestamp(new Date().getTime());
+        post.setPosterId(posterId);
+        post.setReaction(0);
+        post.setStar(0);
         post.setCreateTime(timestamp);
         post.setUpdateTime(timestamp);
-        return baseMapper.insert(post);
+        baseMapper.insert(post);
+        return post.getId();
     }
 
     @Override
@@ -43,15 +49,21 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     }
 
     @Override
-    public List<Post> getPostPreviewsLatestPaged(Integer pageIndex, Integer pageSize) {
+    public Map<String, Object> getPostPreviewsLatestPaged(Integer pageIndex, Integer pageSize) {
         QueryWrapper<Post> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("create_time");
+        queryWrapper
+                .select("id, poster_id, title, subtitle, reaction, star, create_time, update_time")
+                .orderByDesc("create_time");
 
         Page<Post> page = new Page<>(pageIndex, pageSize);
 
         page = baseMapper.selectPage(page, queryWrapper);
 
-        return page.getRecords();
+        Map<String, Object> map = new HashMap<>();
+        map.put("pages", page.getPages());
+        map.put("total", page.getTotal());
+        map.put("postPreviews", page.getRecords());
+        return map;
     }
 
     @Override

@@ -5,7 +5,7 @@ import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 import { defineAsyncComponent } from "vue";
 
 const PostList = defineAsyncComponent(
-  () => import("@/components/home/PostList.vue")
+  () => import("@/components/post/PostList.vue")
 );
 </script>
 
@@ -28,24 +28,22 @@ const PostList = defineAsyncComponent(
 </template>
 
 <style lang="scss" scoped>
-@use "@/sass/global.scss";
-
 .container {
   display: flex;
-  padding-top: 40px;
+  padding-top: $page-padding;
 }
 
 .side-bar-wrap {
   flex: 0 1 auto;
   position: sticky;
-  top: 64px;
-  width: 280px;
+  top: $site-header-height;
+  width: $sidebar-width;
   margin-bottom: auto;
-  padding: global.$area-padding 0;
+  padding: $area-padding 0;
 }
 
 .post-list-wrap {
   flex: 1 10 auto;
-  padding: global.$area-padding;
+  padding: $area-padding;
 }
 </style>

@@ -24,10 +24,6 @@ const getInfo = async (userId?: number) => {
       : `/user/account/info/${userId}`;
 
   const userAccount = await axios.get<UserAccount>(url);
-
-  userAccount.avatar = userAccount.avatar || "";
-  
-
   return userAccount as Omit<Required<UserAccount>, "password">;
 };
 

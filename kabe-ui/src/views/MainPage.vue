@@ -15,15 +15,14 @@ import Footer from "@/components/Footer.vue";
 </template>
 
 <style lang="scss" scoped>
-@use "@/sass/global.scss";
 .main {
   flex: 1 0 auto;
   display: flex;
   .main-container {
     flex-grow: 1;
     margin: 0 auto;
-    max-width: global.$site-width;
-    padding: 0 global.$layout-padding;
+    max-width: $site-width;
+    padding: 0 $layout-padding;
   }
 }
 </style>

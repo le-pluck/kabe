@@ -6,7 +6,8 @@ import com.example.kabesystem.model.Tag;
 import java.util.List;
 
 public interface TagService extends IService<Tag> {
-    List<String> getTagsByPostId(Long postId);
-    List<String> getTags();
-    List<Long> getPostIdsByTag(String tag);
+    List<Tag> getTagsByPostId(Long postId);
+    List<Tag> getTags();
+    List<Long> getPostIdsByTagName(String name);
+    boolean postPostTags(List<Tag> tags, Long postId);
 }

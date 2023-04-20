@@ -40,21 +40,20 @@ instance.interceptors.response.use(
 
     const { code, message, data }: Result = response.data;
 
-    if (code == 200) {
+    const requestSuccessRegex: RegExp = /^2\d{2}$/;
+
+    if (requestSuccessRegex.test(code.toString())) {
+      return data;
+    } else {
+      console.error(message);
+
+      if (code == 401) {
+        router.push("/sign-in").catch((err) => err);
+        console.error(message);
+      }
+
       return data;
     }
-
-    // 暂时没有其他的错误类型需要处理
-    // 后续再对此处进行完善
-
-    console.error(message);
-
-    if (code == 401) {
-      router.push("/sign-in").catch((err) => err);
-      console.error(message);
-    }
-
-    return data;
   },
   (error: AxiosError) => {
     let message = "";

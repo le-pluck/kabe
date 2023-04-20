@@ -1,4 +1,4 @@
-interface PostPureData {
+interface PostDTO {
   id: PostId;
   posterId: PosterId;
   title: string;
@@ -14,4 +14,15 @@ interface PostPureData {
 type PosterId = number;
 type PostId = number;
 
-interface PostPreview extends Omit<Required<PostPureData>, "ops" | "html"> {};
+type NewPostDTO = Pick<
+  PostDTO,
+  "title" | "subtitle" | "ops" | "html"
+>;
+
+type PostPreviewDTO = Omit<Required<PostDTO>, "ops" | "html">;
+
+interface PostPreviewsPagedDTO {
+  pages: number;
+  total: number;
+  postPreviews: PostPreviewDTO[];
+}

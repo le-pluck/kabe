@@ -5,13 +5,15 @@ import lombok.Data;
 @Data
 public class Tag {
     private Long postId;
-    private String tag;
+    private String name;
+    private String icon;
 
     public Tag() {
     }
 
-    public Tag(Long postId, String tagName) {
+    public Tag(Long postId, String name, String icon) {
         this.postId = postId;
-        this.tag = tag;
+        this.name = name;
+        this.icon = icon;
     }
 }

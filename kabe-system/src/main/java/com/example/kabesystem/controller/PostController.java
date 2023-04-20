@@ -23,8 +23,8 @@ public class PostController {
     }
 
     @PostMapping("")
-    public Result<?> postPost(@RequestBody Post post) {
-        return Result.postSuccess(postService.postPost(post));
+    public Result<?> postPost(@RequestBody Post post, @RequestAttribute Long userId) {
+        return Result.postSuccess(postService.postPost(post, userId));
     }
 
     @GetMapping("/preview/{id}")

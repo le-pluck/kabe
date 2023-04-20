@@ -2,13 +2,12 @@
 import { reactive, ref, Ref } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import Delta from "quill-delta";
-import { nextTick } from "process";
+import { postApi, tagApi } from "@/apis";
+import { useRouter } from "vue-router";
+import TagAppender from "@/components/tag/TagAppender.vue";
+import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 
-interface DeltaVary {
-  delta: Delta;
-  oldContents: Delta;
-  source: string;
-}
+const router = useRouter();
 
 interface EditorRef {
   getHTML?: Function;
@@ -16,12 +15,27 @@ interface EditorRef {
 }
 
 const editor = ref<EditorRef>({});
-const innerHTML = ref<string>();
-let content = ref();
+let content = ref<any>();
 
-const onTextChange = ({ delta, oldContents, source }: DeltaVary) => {
-  innerHTML.value = editor.value.getHTML?.();
-  console.log("content", content.value);
+const post = reactive<NewPostDTO>({
+  title: "",
+  subtitle: "",
+  ops: [],
+  html: "",
+});
+
+let tags: Tag[];
+
+const onPostClicked = async () => {
+  post.ops = content.value.ops;
+  post.html = editor.value.getHTML?.();
+  const postId = await postApi.postPost(post);
+  const success = await tagApi.postPostTags(tags, postId);
+  router.push(`/post/${postId}`);
+};
+
+const onTagAppenderChange = (tagList: Tag[]) => {
+  tags = tagList;
 };
 </script>
 
@@ -30,13 +44,21 @@ const onTextChange = ({ delta, oldContents, source }: DeltaVary) => {
     <v-container>
       <v-row>
         <v-col>
-          <v-text-field label="标题" variant="outlined"></v-text-field>
+          <v-text-field
+            label="标题"
+            variant="outlined"
+            v-model="post.title"
+          ></v-text-field>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col>
-          <v-textarea label="副标题" variant="outlined"></v-textarea>
+          <v-textarea
+            label="副标题"
+            variant="outlined"
+            v-model="post.subtitle"
+          ></v-textarea>
         </v-col>
       </v-row>
 
@@ -45,9 +67,9 @@ const onTextChange = ({ delta, oldContents, source }: DeltaVary) => {
           <div class="post-area">
             <QuillEditor
               theme="snow"
-              v-model:content="content"
               ref="editor"
-              @textChange="onTextChange"
+              v-model:content="content"
+              class="min-height-500px_ql-editor-parent"
             />
           </div>
         </v-col>
@@ -55,7 +77,20 @@ const onTextChange = ({ delta, oldContents, source }: DeltaVary) => {
 
       <v-row>
         <v-col>
-          <v-btn block> 发布 </v-btn>
+          <v-btn @click="onPostClicked" block> 发布 </v-btn>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <Suspense>
+            <template #default>
+              <TagAppender @change="onTagAppenderChange"></TagAppender>
+            </template>
+            <template #fallback>
+              <v-skeleton-loader type="image"></v-skeleton-loader>
+            </template>
+          </Suspense>
         </v-col>
       </v-row>
     </v-container>
@@ -64,9 +99,15 @@ const onTextChange = ({ delta, oldContents, source }: DeltaVary) => {
 
 <style lang="scss" scoped>
 .container {
-  padding-top: 40px;
+  padding-top: $page-padding;
 }
 .post-area {
-  border: 1px solid #91a1f7;
+  border: $small-border-width solid $core-color;
+}
+</style>
+
+<style lang="scss">
+.min-height-500px_ql-editor-parent > .ql-editor {
+  min-height: 500px;
 }
 </style>
