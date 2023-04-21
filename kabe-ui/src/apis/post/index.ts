@@ -6,8 +6,7 @@ const postPost = (post: Post | NewPostDTO) => {
 };
 
 const getPost = async (id: PostId) => {
-  const data = await axios.get<PostDTO>(`/post/${id}`);
-  return new Post(data);
+  return new Post(await axios.get<PostDTO>(`/post/${id}`));
 };
 
 const getPostPreviewsByPosterId = (posterId: PosterId) => {
@@ -18,13 +17,11 @@ const getPostPreviewsLatestPaged = async (
   pageIndex: number,
   pageSize: number
 ) => {
-  const postPreviewDTO = await axios.get<PostPreviewsPagedDTO>(
-    "/post/preview/latest",
-    {
+  return new PostPreviewsPaged(
+    await axios.get<PostPreviewsPagedDTO>("/post/preview/latest", {
       params: { pageIndex, pageSize },
-    }
+    })
   );
-  return new PostPreviewsPaged(postPreviewDTO);
 };
 export default {
   postPost,

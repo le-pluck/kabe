@@ -8,9 +8,7 @@ type Item = Tag;
 
 const emit = defineEmits(["change"]);
 
-const data = await tagApi.getTags();
-
-const items = reactive<Item[]>(data);
+const items = reactive<Item[]>(await tagApi.getTags());
 const loading = ref(false);
 const search = ref<string>("");
 const selected = reactive<Item[]>([]);

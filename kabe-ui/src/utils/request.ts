@@ -45,14 +45,22 @@ instance.interceptors.response.use(
     if (requestSuccessRegex.test(code.toString())) {
       return data;
     } else {
-      console.error(message);
-
       if (code == 401) {
-        router.push("/sign-in").catch((err) => err);
-        console.error(message);
       }
-
-      return data;
+      switch (code) {
+        case 401:
+          router.push("/sign-in");
+          console.error("需要身份验证 | ", message);
+          break;
+        case 461:
+        case 462:
+          console.error("账号密码不对 | ", message);
+          break;
+        default:
+          console.error("switch default, 未处理的错误 | message =", message);
+          break;
+      }
+      return Promise.reject({ message, data });
     }
   },
   (error: AxiosError) => {

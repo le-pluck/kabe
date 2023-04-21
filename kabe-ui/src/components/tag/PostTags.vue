@@ -8,11 +8,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-console.log("await tagApi.getTagsByPostId");
-const data = await tagApi.getTagsByPostId(props.postId);
-console.log("await => ", data);
-
-const tags = reactive(data);
+const tags = reactive(await tagApi.getTagsByPostId(props.postId));
 </script>
 
 <template>

@@ -59,6 +59,7 @@ const PostTags = defineAsyncComponent(
           <PostTags :post-id="props.id"></PostTags>
         </template>
         <template #fallback>
+          <!-- 下一行报错 "chip@3" 不可分配，是由于 vuetify 提供了此功能，但未对 ts 完善导致的。等待开发后续更新。 -->
           <v-skeleton-loader type="chip@3"></v-skeleton-loader>
         </template>
       </Suspense>

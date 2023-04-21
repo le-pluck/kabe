@@ -13,14 +13,6 @@ const props = defineProps<Props>();
 const userAccount: Omit<Required<UserAccount>, "password"> = reactive(
   await userAccountApi.getInfo(props.posterId)
 );
-
-console.log("createTime", props.createTime);
-
-console.log(("" + (props.createTime.getMonth() + 101)).substring(1));
-console.log(("" + (props.createTime.getDate() + 100)).substring(1));
-console.log(("" + (props.createTime.getHours() + 100)).substring(1));
-console.log(("" + (props.createTime.getMinutes() + 100)).substring(1));
-console.log(("" + (props.createTime.getSeconds() + 100)).substring(1));
 </script>
 
 <template>

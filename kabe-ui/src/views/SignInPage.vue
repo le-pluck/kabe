@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { userAccountApi } from "@/apis";
 import ThemeLightDarkSwitcher from "@/components/header/ThemeLightDarkSwitcher.vue";
-import { reactive } from "vue";
+import { error } from "console";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -52,15 +53,34 @@ const userAccount: UserAccount = reactive({
   password: "",
 });
 
+const loginWarning = reactive({
+  show: false,
+  title: "错误",
+  text: "错误",
+});
+
 const login = async () => {
   if (!formValidation.valid) return;
 
-  const token = await userAccountApi.login({
-    username: userAccount.username,
-    password: userAccount.password,
-  });
-  localStorage.setItem("token", token);
-  router.push("/home");
+  userAccountApi
+    .login({
+      username: userAccount.username,
+      password: userAccount.password,
+    })
+    .then((token) => {
+      localStorage.setItem("token", token);
+      console.log("res token =", token);
+      router.push("/home");
+    })
+    .catch((error) => {
+      // 密码错误提示
+      loginWarning.show = true;
+      loginWarning.text = error.message;
+      console.log("error =", error);
+    });
+};
+const onCloseClick = () => {
+  loginWarning.show = false;
 };
 </script>
 
@@ -99,6 +119,21 @@ const login = async () => {
                   ></v-text-field>
                 </v-col>
               </v-row>
+              <v-expand-transition>
+                <v-row v-if="loginWarning.show">
+                  <v-col>
+                    <v-alert
+                      density="compact"
+                      type="warning"
+                      :title="loginWarning.title"
+                      :text="loginWarning.text"
+                      closable
+                      @click:close="onCloseClick"
+                    ></v-alert>
+                  </v-col>
+                </v-row>
+              </v-expand-transition>
+
               <v-row>
                 <v-col>
                   <v-btn variant="outlined" type="submit" block @click="login">
@@ -109,7 +144,7 @@ const login = async () => {
               <v-row align="center">
                 <v-col cols="12" md="10">
                   <span>还没有 Kabe 账号？</span>
-                  <router-link to="/"> 注册账号 </router-link>
+                  <router-link to="/sign-up"> 注册账号 </router-link>
                 </v-col>
                 <v-col cols="12" md="2">
                   <ThemeLightDarkSwitcher></ThemeLightDarkSwitcher>
@@ -144,6 +179,13 @@ const login = async () => {
           color: #91a1f7;
           font-weight: bold;
           margin-bottom: 30px;
+        }
+        a {
+          text-decoration: none;
+          color: $link-color;
+          &:hover {
+            color: $link-color-hover;
+          }
         }
       }
     }

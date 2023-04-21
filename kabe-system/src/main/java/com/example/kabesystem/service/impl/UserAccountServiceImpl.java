@@ -32,10 +32,10 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         UserAccount userAccount = selectOneByUsername(username);
         Map<String, Object> result = new HashMap<>();
         if (userAccount == null) {
-            result.put("code", 501);
+            result.put("code", 461);
             result.put("msg", "未注册的用户名。");
         } else if (!Objects.equals(userAccount.getPassword(), md5)) {
-            result.put("code", 502);
+            result.put("code", 462);
             result.put("msg", "错误的用户名或密码。");
         } else {
             result.put("code", 200);

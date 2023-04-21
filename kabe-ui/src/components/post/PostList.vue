@@ -38,6 +38,7 @@ const onModelValueUpdate = async (index: number) => {
 <template>
   <PostPreviewer
     v-for="item in postPreviewsPaged.postPreviews"
+    :key="item.id"
     v-bind="item"
   ></PostPreviewer>
   <v-pagination
