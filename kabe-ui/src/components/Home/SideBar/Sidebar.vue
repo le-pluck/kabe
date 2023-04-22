@@ -1,12 +1,17 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 const items = reactive(["用户", "标签", "查找"]);
+
 </script>
 
 <template>
   <div class="sidebar">
     <div class="sidebar-area">
-      <v-btn> New Post </v-btn>
+      <v-btn @click="clicked"> New Post </v-btn>
     </div>
 
     <div class="divider-wrap">
@@ -24,14 +29,12 @@ const items = reactive(["用户", "标签", "查找"]);
 </template>
 
 <style lang="scss">
-@use "@/sass/global";
-
 .sidebar {
   .sidebar-area {
-    padding: 0 global.$area-padding global.$area-padding global.$area-padding;
+    padding: 0 $area-padding $area-padding $area-padding;
   }
   .divider-wrap {
-    padding: 0 0 global.$area-padding 0;
+    padding: 0 0 $area-padding 0;
   }
 }
 </style>

@@ -5,14 +5,18 @@ import HomePage from "@/views/main/HomePage.vue";
 import PostPage from "@/views/main/PostPage.vue";
 import SignInPage from "@/views/SignInPage.vue";
 import SignUpPage from "@/views/SignUpPage.vue";
+import PostExpPage from "@/views/main/PostExpPage.vue";
+import CreatePostPage from "@/views/main/CreatePostPage.vue";
 
 const routes = [
   {
     path: "/",
     component: MainPage,
     children: [
-      { path: "home", component: HomePage },
-      { path: "post", component: PostPage },
+      { path: "/home", component: HomePage },
+      { path: "/post/:postId", component: PostPage, props: true },
+      { path: "/post-exp", component: PostExpPage },
+      { path: "/create-post", component: CreatePostPage },
     ],
   },
   { path: "/sign-in", component: SignInPage },

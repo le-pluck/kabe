@@ -24,5 +24,10 @@
       "name": "mail.subject.verification",
       "type": "java.lang.String",
       "description": "注册验证邮件的主题。\nSubject of registration verification email."
+    },
+    {
+      "name": "mail.verification-code.expiration",
+      "type": "java.lang.Long",
+      "description": "设置验证码过期时间（秒）."
     }
   ] }

@@ -15,4 +15,10 @@ public interface UserAccountService extends IService<UserAccount> {
     String issueToken(UserAccount userAccount);
 
     Map<String, Claim> verifyToken(String token);
+
+    UserAccount getInfo(Long id);
+
+    String getAvatar(Long id);
+
+    Map<String, Object> createUserAccount(UserAccount userAccount, String verificationCode);
 }

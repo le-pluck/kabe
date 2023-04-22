@@ -1,0 +1,73 @@
+// 主站
+$site-width: 1280px;
+$site-header-height: 4rem;
+$sidebar-width: 17.5rem;
+$logo-width: 3rem;
+
+// 动态主题颜色
+
+$dynamic-background: rgb(var(--v-theme-background));
+$dynamic-on-background: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+$core-color: #6c5ce7;
+
+$dynamic-medium-emphasis-opacity: var(--v-medium-emphasis-opacity);
+
+$color: $dynamic-on-background;
+$color-hover: $core-color;
+
+$link-color: #699aff;
+$link-color-hover: #6c5ce7;
+
+// padding
+
+$item-padding: 0.5rem;
+$area-padding: 1rem;
+$layout-padding: 1.5rem;
+$page-padding: 2.5rem;
+$inner-editor-padding-height: 12px;
+$inner-editor-padding-width: 15px;
+
+// margin
+
+$item-margin-right: 0.5rem;
+$item-margin-bottom: 1rem;
+
+
+// 关于 h1 ~ h6
+
+$h1-fontsize: 2rem;
+$h2-fontsize: 1.5rem;
+
+h1 {
+  font-size: $h1-fontsize;
+}
+h2 {
+  font-size: $h2-fontsize;
+}
+
+// post viewer
+
+$post-viewer-base-fontsize: 1rem;
+
+$small-border-width: 1px;
+$medium-border-width: 0.25rem;
+$large-border-width: 0.5rem;
+
+// Vuetify 定义
+$avatar-height-large: 56px;
+$avatar-height-default: 40px;
+
+//
+// 关于 opacity
+//
+// --v-border-opacity: 0.12;
+// --v-high-emphasis-opacity: 0.87;
+// --v-disabled-opacity: 0.38;
+// --v-idle-opacity: 0.1;
+// --v-hover-opacity: 0.04;
+// --v-focus-opacity: 0.12;
+// --v-selected-opacity: 0.08;
+// --v-activated-opacity: 0.12;
+// --v-pressed-opacity: 0.16;
+// --v-dragged-opacity: 0.08;
+//

@@ -18,7 +18,7 @@
     "roboto-fontface": "*",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
-    "vuetify": "npm:@vuetify/nightly@next",
+    "vuetify": "npm:@vuetify/nightly@^3.1.15-master-20230419.0",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
@@ -35,10 +35,10 @@
   },
   "overrides": {
     "vite-plugin-vuetify": {
-      "vuetify": "npm:@vuetify/nightly@next"
+      "vuetify": "npm:@vuetify/nightly@latest"
     },
     "@vuetify/loader-shared": {
-      "vuetify": "npm:@vuetify/nightly@next"
+      "vuetify": "npm:@vuetify/nightly@latest"
     }
   },
   "type": "module"

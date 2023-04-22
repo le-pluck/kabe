@@ -1,45 +1,49 @@
 <script lang="ts" setup>
-import Sidebar from "@/components/Home/SideBar/Sidebar.vue";
-import PostList from "@/components/Home/PostList.vue";
+import Sidebar from "@/components/home/sideBar/Sidebar.vue";
+import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
+
+import { defineAsyncComponent } from "vue";
+
+const PostList = defineAsyncComponent(
+  () => import("@/components/post/PostList.vue")
+);
 </script>
 
 <template>
-  <v-main class="main">
-    <div class="main-container">
-      <div class="side-bar-wrap">
-        <Sidebar></Sidebar>
-      </div>
-      <div class="post-list-wrap">
-        <PostList></PostList>
-      </div>
+  <div class="container">
+    <div class="side-bar-wrap">
+      <Sidebar></Sidebar>
     </div>
-  </v-main>
+    <div class="post-list-wrap">
+      <Suspense>
+        <template #default>
+          <PostList></PostList>
+        </template>
+        <template #fallback>
+          <v-skeleton-loader></v-skeleton-loader>
+        </template>
+      </Suspense>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-@use "@/sass/global.scss";
-
-.main {
-  flex: 1 0 auto;
+.container {
   display: flex;
-  .main-container {
-    flex-grow: 1;
-    margin: 0 auto;
-    max-width: global.$site-width;
-    padding: 0 global.$layout-padding;
-    display: flex;
-    .side-bar-wrap {
-      flex: 0 1 auto;
-      position: sticky;
-      top: 64px;
-      width: 280px;
-      margin-bottom: auto;
-      padding: global.$area-padding 0;
-    }
-    .post-list-wrap {
-      flex: 1 10 auto;
-      padding: global.$area-padding;
-    }
-  }
+  padding-top: $page-padding;
+}
+
+.side-bar-wrap {
+  flex: 0 1 auto;
+  position: sticky;
+  top: $site-header-height;
+  width: $sidebar-width;
+  margin-bottom: auto;
+  padding: $area-padding 0;
+}
+
+.post-list-wrap {
+  flex: 1 10 auto;
+  padding: $area-padding;
 }
 </style>

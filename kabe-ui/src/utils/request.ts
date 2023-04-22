@@ -40,21 +40,35 @@ instance.interceptors.response.use(
 
     const { code, message, data }: Result = response.data;
 
-    if (code == 200) {
+    const requestSuccessRegex: RegExp = /^2\d{2}$/;
+
+    if (requestSuccessRegex.test(code.toString())) {
       return data;
+    } else {
+      if (code == 401) {
+      }
+      switch (code) {
+        case 401:
+          router.push("/sign-in");
+          console.error("需要身份验证 | ", message);
+          break;
+        case 461:
+        case 462:
+          console.error("账号密码不对 | ", message);
+          break;
+        case 463:
+          console.error("注册用户名重复 | ", message);
+          break;
+        case 464:
+        case 465:
+          console.error("验证码相关错误 | ", message);
+          break;
+        default:
+          console.error("switch default, 未处理的错误 | message =", message);
+          break;
+      }
+      return Promise.reject({ message, data });
     }
-
-    // 暂时没有其他的错误类型需要处理
-    // 后续再对此处进行完善
-
-    console.error(message);
-
-    if (code == 401) {
-      router.push("/sign-in").catch((err) => err);
-      console.error(message);
-    }
-
-    return data;
   },
   (error: AxiosError) => {
     let message = "";

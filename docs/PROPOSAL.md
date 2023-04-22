@@ -2,7 +2,7 @@
 
 一些提案是值得考虑的
 
-## Custom requireToken annotation
+## Custom requireToken annotation （自定义 requireToken 注解）
 
 自定义 `@requireToken` 注解
 
@@ -62,3 +62,68 @@ public class UserAccountController {
 ### Champions （推动者）
 
 + Pluck ([github@le-pluck](https://github.com/le-pluck), [gitee@pluck7](https://gitee.com/pluck7))
+
+## Elegant exception handling （优雅的异常处理）
+
+### Status （状态）
+
+Stage 1 : Proposal（提案）
+
+### Motivation （动机）
+
+目前我的后端程序完全没有处理任何异常，这是不合理的。
+
+### References （参考）
+
++ [Spring Boot项目优雅的全局异常处理方式 | 掘金](https://juejin.cn/post/6959520793063587848)
++ [SpringBoot异常处理看这篇就够了 | FleyX's Blog](https://blog.fleyx.com/blog/detail/20210927/)
+
+### Champions （推动者）
+
++ Pluck ([github@le-pluck](https://github.com/le-pluck), [gitee@pluck7](https://gitee.com/pluck7))
+
+## Tourist visit （游客访问）
+
+### Status （状态）
+
+Stage 1 : Proposal（提案）
+
+### Motivation （动机）
+
+目前我们的网站是未经登录不可访问的。（只能访问登录和注册界面）
+
+作为一个论坛性质的网站，应该允许未经登录的帖子浏览。只有涉及发布帖子、收藏帖子等操作时让用户登录。
+
+### References （参考）
+
++ [路由元信息 | Vue Router](https://router.vuejs.org/zh/guide/advanced/meta.html)
+
+### Champions （推动者）
+
++ Pluck ([github@le-pluck](https://github.com/le-pluck), [gitee@pluck7](https://gitee.com/pluck7))
+
+
+## Ultimate Tag （终极标签）
+
+### Status （状态）
+
+Stage 1 : Proposal（提案）
+
+### Motivation （动机）
+
++ 图标
+    + 可以设计一个合适的数据结构，来让我们的标签有图标。还可以提供用户新建标签时，添加合适的图标。
++ 话题量 / 热度
+    + 为文章添加 Tag 时，对用户输入的模糊搜索结果按照标签话题量/热度排序，并显示话题量/热度。
+    + 注：话题量是 *(话题量丨有史以来)*，热度是 *(话题量丨一周内)*。
+    + 扩展：热度或许可以让用户选择查看 一周内、一个月内 等等。但是这样的设计反而可能让交互变复杂。
+
+### References （参考）
+
++ [Material Design Icons - Icon Library - Pictogrammers](https://pictogrammers.com/library/mdi/)
+
+### Champions （推动者）
+
++ Pluck ([github@le-pluck](https://github.com/le-pluck), [gitee@pluck7](https://gitee.com/pluck7))
+
+<style>h3{opacity: 0.75;} h4{opacity: 0.5;} h5{opacity: 0.3;}</style>

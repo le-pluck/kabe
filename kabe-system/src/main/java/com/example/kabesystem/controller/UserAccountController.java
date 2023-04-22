@@ -29,10 +29,37 @@ public class UserAccountController {
         } else {
             return Result.failure(
                     (int) map.get("code"),
-                    (String) map.get("msg"),
+                    (String) map.get("message"),
                     null
             );
         }
+    }
+
+    @GetMapping("/avatar")
+    public Result<?> getAvatarCurrent(@RequestAttribute Long userId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("avatar", userAccountService.getAvatar(userId));
+        return Result.success(map);
+    }
+
+    @GetMapping("/avatar/{id}")
+    public Result<?> getAvatarById(@PathVariable(value = "id") Long id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("avatar", userAccountService.getAvatar(id));
+        return Result.success(map);
+    }
+
+    @GetMapping("/info")
+    public Result<?> getInfoCurrent(@RequestAttribute Long userId) {
+        UserAccount userAccount = userAccountService.getInfo(userId);
+        System.out.println("======================== userAccount.toString() ========================");
+        System.out.println(userAccount.toString());
+        return Result.success(userAccount);
+    }
+
+    @GetMapping("/info/{id}")
+    public Result<?> getInfoById(@PathVariable(value = "id") Long id) {
+        return Result.success(userAccountService.getInfo(id));
     }
 
     @GetMapping("/any")
@@ -41,5 +68,12 @@ public class UserAccountController {
         map.put("token", token);
         map.put("userId", userId);
         return Result.success(map);
+    }
+
+
+    @PostMapping("")
+    public Result<?> createUserAccount(@RequestBody UserAccount userAccount, @RequestParam String code) {
+        Map<String, Object> map = userAccountService.createUserAccount(userAccount, code);
+        return Result.response((int) map.get("code"), (String) map.get("message"), null);
     }
 }
