@@ -76,4 +76,10 @@ public class UserAccountController {
         Map<String, Object> map = userAccountService.createUserAccount(userAccount, code);
         return Result.response((int) map.get("code"), (String) map.get("message"), null);
     }
+
+
+    @GetMapping("/nickname/{id}")
+    public Result<?> getNickname(@PathVariable(value = "id") Long id) {
+        return Result.success(userAccountService.getNickname(id));
+    }
 }

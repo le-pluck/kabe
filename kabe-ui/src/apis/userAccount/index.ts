@@ -41,6 +41,10 @@ const createUserAccount = (
   return axios.post<void>("/user/account", userAccount, { params: { code } });
 };
 
+const getNickname = (userId: number) => {
+  return axios.get<string>(`/user/account/nickname/${userId}`);
+};
+
 export default {
   login,
   any,
@@ -48,4 +52,5 @@ export default {
   getInfo,
   sendVerificationMail,
   createUserAccount,
+  getNickname,
 };

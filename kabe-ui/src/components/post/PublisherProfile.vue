@@ -4,14 +4,14 @@ import { isReactive } from "vue";
 import { reactive } from "vue";
 
 interface Props {
-  posterId: number;
-  createTime: Date;
+  publisherId: number;
+  publishTime: Date;
 }
 
 const props = defineProps<Props>();
 
 const userAccount: Omit<Required<UserAccount>, "password"> = reactive(
-  await userAccountApi.getInfo(props.posterId)
+  await userAccountApi.getInfo(props.publisherId)
 );
 </script>
 
@@ -28,7 +28,7 @@ const userAccount: Omit<Required<UserAccount>, "password"> = reactive(
       </div>
       <div class="post-time">
         <v-btn variant="text" disabled>
-          发表于 {{ createTime.format("yyyy-MM-dd HH:mm:ss") }}
+          发表于 {{ publishTime.format("yyyy-MM-dd HH:mm:ss") }}
         </v-btn>
       </div>
     </div>
