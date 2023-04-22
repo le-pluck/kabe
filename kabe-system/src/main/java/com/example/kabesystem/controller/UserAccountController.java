@@ -29,7 +29,7 @@ public class UserAccountController {
         } else {
             return Result.failure(
                     (int) map.get("code"),
-                    (String) map.get("msg"),
+                    (String) map.get("message"),
                     null
             );
         }
@@ -68,5 +68,12 @@ public class UserAccountController {
         map.put("token", token);
         map.put("userId", userId);
         return Result.success(map);
+    }
+
+
+    @PostMapping("")
+    public Result<?> createUserAccount(@RequestBody UserAccount userAccount, @RequestParam String code) {
+        Map<String, Object> map = userAccountService.createUserAccount(userAccount, code);
+        return Result.response((int) map.get("code"), (String) map.get("message"), null);
     }
 }

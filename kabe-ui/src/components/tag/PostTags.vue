@@ -18,7 +18,7 @@ const tags = reactive(await tagApi.getTagsByPostId(props.postId));
         <v-btn
           v-for="(tag, i) in tags"
           :prepend-icon="tag.icon"
-          variant="tonal"
+          variant="outlined"
           density="comfortable"
         >
           {{ tag.name }}
@@ -27,3 +27,10 @@ const tags = reactive(await tagApi.getTagsByPostId(props.postId));
     </v-row>
   </v-container>
 </template>
+
+<style lang="scss" scoped>
+button {
+  margin-right: $item-margin-right;
+  margin-bottom: $item-margin-bottom;
+}
+</style>

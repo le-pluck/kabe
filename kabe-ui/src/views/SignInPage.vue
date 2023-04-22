@@ -48,7 +48,7 @@ const formValidation: FormValidation = reactive({
   ],
 });
 
-const userAccount: UserAccount = reactive({
+const userAccount: Pick<UserAccount, "username" | "password"> = reactive({
   username: "",
   password: "",
 });
@@ -167,12 +167,13 @@ const onCloseClick = () => {
     flex: 1 0 auto;
     display: flex;
     justify-content: space-around;
+    padding: 0 $item-padding;
     .card {
       align-self: center;
       flex: 1 0 auto;
       max-width: 500px;
       .card-inside {
-        padding: 20px 20px;
+        padding: $area-padding;
         .logo-text {
           text-align: center;
           font-size: 30px;

@@ -1,6 +1,8 @@
 import axios from "@/utils/request";
 
-const login = (userAccount: UserAccount): Promise<BearerToken> => {
+const login = (
+  userAccount: Pick<UserAccount, "username" | "password">
+): Promise<BearerToken> => {
   return axios.post<BearerToken>("/user/account/token", userAccount);
 };
 
@@ -14,7 +16,7 @@ const getAvatar = (userId?: number) => {
       ? "/user/account/avatar"
       : `/user/account/avatar/${userId}`;
 
-  return axios.get<Pick<Required<UserAccount>, "avatar">>(url);
+  return axios.get<Pick<UserAccount, "avatar">>(url);
 };
 
 const getInfo = async (userId?: number) => {
@@ -23,8 +25,20 @@ const getInfo = async (userId?: number) => {
       ? "/user/account/info"
       : `/user/account/info/${userId}`;
 
-  const userAccount = await axios.get<UserAccount>(url);
-  return userAccount as Omit<Required<UserAccount>, "password">;
+  return await axios.get<UserInfo>(url);
+};
+
+const sendVerificationMail = (
+  info: Pick<UserAccount, "email" | "username">
+) => {
+  return axios.post<boolean>("/mail/verification", info);
+};
+
+const createUserAccount = (
+  userAccount: Pick<UserAccount, "username" | "email" | "password">,
+  code: string
+) => {
+  return axios.post<void>("/user/account", userAccount, { params: { code } });
 };
 
 export default {
@@ -32,4 +46,6 @@ export default {
   any,
   getAvatar,
   getInfo,
+  sendVerificationMail,
+  createUserAccount,
 };

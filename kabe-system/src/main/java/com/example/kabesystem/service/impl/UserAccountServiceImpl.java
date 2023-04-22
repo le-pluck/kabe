@@ -7,7 +7,9 @@ import com.example.kabesystem.mapper.UserAccountMapper;
 import com.example.kabesystem.model.UserAccount;
 import com.example.kabesystem.service.UserAccountService;
 import com.example.kabesystem.util.JWTUtil;
+import com.example.kabesystem.util.RedisUtil;
 import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -18,6 +20,12 @@ import java.util.Objects;
 
 @Service
 public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserAccount> implements UserAccountService {
+
+    private final RedisUtil redisUtil;
+
+    public UserAccountServiceImpl(RedisUtil redisUtil) {
+        this.redisUtil = redisUtil;
+    }
 
     @Override
     public UserAccount selectOneByUsername(String username) {
@@ -33,10 +41,10 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         Map<String, Object> result = new HashMap<>();
         if (userAccount == null) {
             result.put("code", 461);
-            result.put("msg", "未注册的用户名。");
+            result.put("message", "未注册的用户名。");
         } else if (!Objects.equals(userAccount.getPassword(), md5)) {
             result.put("code", 462);
-            result.put("msg", "错误的用户名或密码。");
+            result.put("message", "错误的用户名或密码。");
         } else {
             result.put("code", 200);
             result.put("userAccount", userAccount);
@@ -67,5 +75,28 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         queryWrapper.select("avatar");
         queryWrapper.eq("id", id);
         return baseMapper.selectOne(queryWrapper).getAvatar();
+    }
+
+    @Override
+    public Map<String, Object> createUserAccount(UserAccount userAccount, String verificationCode) {
+        Map<String, Object> map = new HashMap<>();
+        String cachedCode = (String) redisUtil.get(userAccount.getEmail());
+        if (cachedCode == null) {
+            map.put("code", 464);
+            map.put("message", "验证码已过期。");
+        } else if (!Objects.equals(cachedCode, verificationCode)) {
+            map.put("code", 465);
+            map.put("message", "不是正确的验证码。");
+        } else {
+            String md5 = DigestUtils.md5DigestAsHex(userAccount.getPassword().getBytes(StandardCharsets.UTF_8));
+            userAccount.setPassword(md5);
+            userAccount.setIsAdmin(false);
+            userAccount.setIsUploader(false);
+            userAccount.setNickname("Kabe用户_" + userAccount.getUsername());
+            baseMapper.insert(userAccount);
+            map.put("code", 201);
+            map.put("message", "OK");
+        }
+        return map;
     }
 }

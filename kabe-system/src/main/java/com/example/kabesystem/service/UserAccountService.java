@@ -19,4 +19,6 @@ public interface UserAccountService extends IService<UserAccount> {
     UserAccount getInfo(Long id);
 
     String getAvatar(Long id);
+
+    Map<String, Object> createUserAccount(UserAccount userAccount, String verificationCode);
 }

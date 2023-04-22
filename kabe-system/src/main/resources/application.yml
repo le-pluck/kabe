@@ -18,6 +18,12 @@ spring:
     username: plucknets@163.com
     password: RLJGCWQKGTFHOESU
     default-encoding: utf-8
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ayame20#
+      database: 0
 
 
 # Mybatis-Plus
@@ -29,6 +35,7 @@ mybatis-plus:
 mail:
   verification-code:
     length: 5
+    expiration: 900
   from-address: plucknets@163.com
   subject:
     verification: 验证 Kabe 的电子邮件地址

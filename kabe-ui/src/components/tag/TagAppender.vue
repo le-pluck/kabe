@@ -51,7 +51,7 @@ const submit = (postId: PostId) => {
     <v-toolbar color="transparent" flat>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Photo Info</v-toolbar-title>
+      <v-toolbar-title> 为帖子选择标签 </v-toolbar-title>
     </v-toolbar>
 
     <v-container>

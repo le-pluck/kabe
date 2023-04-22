@@ -56,6 +56,13 @@ instance.interceptors.response.use(
         case 462:
           console.error("账号密码不对 | ", message);
           break;
+        case 463:
+          console.error("注册用户名重复 | ", message);
+          break;
+        case 464:
+        case 465:
+          console.error("验证码相关错误 | ", message);
+          break;
         default:
           console.error("switch default, 未处理的错误 | message =", message);
           break;
