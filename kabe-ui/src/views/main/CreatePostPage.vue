@@ -70,6 +70,7 @@ const onTagAppenderChange = (tagList: Tag[]) => {
               ref="editor"
               v-model:content="content"
               class="min-height-500px_ql-editor-parent"
+              toolbar="full"
             />
           </div>
         </v-col>

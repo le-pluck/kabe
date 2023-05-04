@@ -58,6 +58,16 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.5.3.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.yulichang</groupId>
+            <artifactId>mybatis-plus-join-boot-starter</artifactId>
+            <version>1.4.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
+        </dependency>
 
         <!-- mail + thymeleaf 定义模板邮件 -->
         <dependency>

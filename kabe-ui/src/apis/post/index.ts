@@ -5,7 +5,7 @@ const postPost = (post: Post | NewPostDTO) => {
   return axios.post<PostId>("/post", post);
 };
 
-const getPost = async (id: PostId) => {
+const getPost = async (id: PostId): Promise<Post> => {
   return new Post(await axios.get<PostDTO>(`/post/${id}`));
 };
 

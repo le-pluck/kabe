@@ -22,7 +22,10 @@ public class CommentController {
     }
 
     @GetMapping("/{postId}")
-    public Result<?> getPostCommentsPaged(@PathVariable(value = "postId") Long postId, @RequestParam Integer pageIndex, @RequestParam Integer pageSize) {
+    public Result<?> getPostCommentsPaged(
+            @PathVariable(value = "postId") Long postId,
+            @RequestParam Integer pageIndex,
+            @RequestParam Integer pageSize) {
         return Result.success(commentService.getPostCommentsPaged(postId, pageIndex, pageSize));
     }
 }

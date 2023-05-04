@@ -30,6 +30,8 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    object-wrapper-factory: com.baomidou.mybatisplus.extension.MybatisMapWrapperFactory
 
 # Custom configuration items
 mail:

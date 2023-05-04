@@ -11,8 +11,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/mail")
 public class MailController {
-    @Autowired
-    MailService mailService;
+    private final MailService mailService;
+
+    public MailController(MailService mailService) {
+        this.mailService = mailService;
+    }
 
     @PostMapping("/verification")
     private Result<?> sendVerificationMail(@RequestBody UserAccount userAccount) {

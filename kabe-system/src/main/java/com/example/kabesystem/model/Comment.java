@@ -11,7 +11,8 @@ public class Comment {
     @TableId(type = IdType.AUTO)
     private Long id;
     private String parentType;
-    private Long parentId;
+    private Long storageParentId;
+    private Long logicalParentId;
     private String content;
     private Timestamp createTime;
     private Long userId;
@@ -19,10 +20,11 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Long id, String parentType, Long parentId, String content, Timestamp createTime, Long userId) {
+    public Comment(Long id, String parentType, Long storageParentId, Long logicalParentId, String content, Timestamp createTime, Long userId) {
         this.id = id;
         this.parentType = parentType;
-        this.parentId = parentId;
+        this.storageParentId = storageParentId;
+        this.logicalParentId = logicalParentId;
         this.content = content;
         this.createTime = createTime;
         this.userId = userId;
