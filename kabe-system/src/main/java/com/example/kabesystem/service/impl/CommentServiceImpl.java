@@ -1,6 +1,5 @@
 package com.example.kabesystem.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.kabesystem.dto.comment.CommentResponseDTO;
@@ -18,11 +17,11 @@ import java.util.*;
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
 
     @Override
-    public void createComment(Comment comment, Long userId) {
+    public boolean createComment(Comment comment, Long userId) {
         Timestamp timestamp = new Timestamp(new Date().getTime());
         comment.setUserId(userId);
         comment.setCreateTime(timestamp);
-        baseMapper.insert(comment);
+        return baseMapper.insert(comment) != 0;
     }
 
     @Override

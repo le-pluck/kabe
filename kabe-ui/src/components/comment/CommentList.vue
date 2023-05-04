@@ -3,7 +3,8 @@ import { commentApi } from "@/apis";
 import Comment from "./Comment.vue";
 import { defineProps, ref } from "vue";
 import { reactive } from "vue";
-import { Comment as CommentClass } from "@/apis/comment/class";
+import { CommentResponse } from "@/apis/comment/class";
+import CommentCreator from "./CommentCreator.vue";
 
 interface Props {
   postId: PostId;
@@ -45,21 +46,31 @@ const onModelValueUpdate = async (index: number) => {
 </script>
 
 <template>
-  <v-expansion-panels variant="popout">
+  <CommentCreator
+    label="回复sss"
+  ></CommentCreator>
+  <v-expansion-panels variant="popout" multiple>
     <v-expansion-panel
-      v-for="item in commentPage.postComments"
-      :key="item.comment.id"
+      v-for="postCommentItem in commentPage.postComments"
+      :key="postCommentItem.comment.id"
     >
       <v-expansion-panel-title>
-        <Comment :comment="new CommentClass(item.comment)"> </Comment>
+        <Comment :comment="new CommentResponse(postCommentItem.comment)">
+        </Comment>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <Comment
-          v-for="childItem in item.children"
-          :key="childItem.id"
-          :comment="new CommentClass(childItem)"
+          v-for="childCommentItem in postCommentItem.children"
+          :key="childCommentItem.id"
+          :comment="new CommentResponse(childCommentItem)"
         >
         </Comment>
+        <div
+          class="without-child-comment"
+          v-if="postCommentItem.children.length === 0"
+        >
+          - 再怎么翻也没有啦 -
+        </div>
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
@@ -75,3 +86,10 @@ const onModelValueUpdate = async (index: number) => {
     @update:model-value="onModelValueUpdate"
   ></v-pagination>
 </template>
+
+<style lang="scss" scoped>
+.without-child-comment {
+  text-align: center;
+  opacity: $dynamic-medium-emphasis-opacity;
+}
+</style>

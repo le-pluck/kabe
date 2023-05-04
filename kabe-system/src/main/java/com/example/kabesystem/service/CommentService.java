@@ -6,6 +6,6 @@ import com.example.kabesystem.model.Comment;
 import java.util.Map;
 
 public interface CommentService extends IService<Comment> {
-    void createComment(Comment comment, Long userId);
+    boolean createComment(Comment comment, Long userId);
     Map<String, Object> getPostCommentsPaged(Long postId, Integer pageIndex, Integer pageSize);
 }

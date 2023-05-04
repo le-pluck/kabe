@@ -1,28 +1,27 @@
-interface CommentDTO {
+class CommentResponse implements CommentResponseDTO {
   id: number;
   parentType: string;
-  parentId: number;
+  storageParentId: number;
+  logicalParentId: number;
   content: string;
   createTime: Date;
   userId: number;
-}
+  nickname: string;
+  avatar: string;
+  parentNickname: string;
 
-class Comment implements CommentDTO {
-  id: number;
-  parentType: string;
-  parentId: number;
-  content: string;
-  createTime: Date;
-  userId: number;
-
-  constructor(commentDTO: CommentDTO) {
-    this.id = commentDTO.id;
-    this.parentType = commentDTO.parentType;
-    this.parentId = commentDTO.parentId;
-    this.content = commentDTO.content;
-    this.createTime = new Date(commentDTO.createTime);
-    this.userId = commentDTO.userId;
+  constructor(commentResponseDTO: CommentResponseDTO) {
+    this.id = commentResponseDTO.id;
+    this.parentType = commentResponseDTO.parentType;
+    this.storageParentId = commentResponseDTO.storageParentId;
+    this.logicalParentId = commentResponseDTO.logicalParentId;
+    this.content = commentResponseDTO.content;
+    this.createTime = new Date(commentResponseDTO.createTime);
+    this.userId = commentResponseDTO.userId;
+    this.nickname = commentResponseDTO.nickname;
+    this.avatar = commentResponseDTO.avatar;
+    this.parentNickname = commentResponseDTO.parentNickname;
   }
 }
 
-export { Comment };
+export { CommentResponse };

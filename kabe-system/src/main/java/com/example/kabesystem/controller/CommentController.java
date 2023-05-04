@@ -17,8 +17,7 @@ public class CommentController {
 
     @PostMapping("")
     public Result<?> postComment(@RequestBody Comment comment, @RequestAttribute Long userId) {
-        commentService.createComment(comment, userId);
-        return Result.postSuccess(null);
+        return Result.success(commentService.createComment(comment, userId)); // 异常处理问题
     }
 
     @GetMapping("/{postId}")

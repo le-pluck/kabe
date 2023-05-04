@@ -1,22 +1,26 @@
-interface CommentDTO {
+interface CommentResponseDTO {
   id: number;
   parentType: string;
-  parentId: number;
+  storageParentId: number;
+  logicalParentId: number;
   content: string;
   createTime: Date;
   userId: number;
+  nickname: string;
+  avatar: string;
+  parentNickname: string;
 }
 
-interface NewCommentDTO
-  extends Pick<CommentDTO, "parentType" | "parentId" | "content"> {}
+interface CommentCreateDTO
+  extends Pick<CommentResponseDTO, "parentType" | "storageParentId" | "logicalParentId" | "content"> {}
 
-interface PostCommentDTO {
-  comment: CommentDTO,
-  children: CommentDTO[],
+interface PostCommentResponseDTO {
+  comment: CommentResponseDTO,
+  children: CommentResponseDTO[],
 }
 
 interface CommentPagedDTO {
   pages: number;
   total: number;
-  postComments: PostCommentDTO[];
+  postComments: PostCommentResponseDTO[];
 }

@@ -1,7 +1,7 @@
 import axios from "@/utils/request";
 
-const createComment = (comment: NewCommentDTO) => {
-  return axios.post<void>("/comment", comment);
+const createComment = (comment: CommentCreateDTO) => {
+  return axios.post<boolean>("/comment", comment);
 };
 
 const getPostCommentsPaged = (

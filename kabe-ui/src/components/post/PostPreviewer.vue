@@ -17,8 +17,8 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const PublisherProfile = defineAsyncComponent(
-  () => import("@/components/post/PublisherProfile.vue")
+const PublisherProfileAsync = defineAsyncComponent(
+  () => import("@/components/profile/PublisherProfileAsync.vue")
 );
 const PostTags = defineAsyncComponent(
   () => import("@/components/tag/PostTags.vue")
@@ -29,10 +29,10 @@ const PostTags = defineAsyncComponent(
   <v-card class="previewer">
     <Suspense>
       <template #default>
-        <PublisherProfile
+        <PublisherProfileAsync
           :publisher-id="posterId"
           :publish-time="createTime"
-        ></PublisherProfile>
+        ></PublisherProfileAsync>
       </template>
       <template #fallback>
         <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>

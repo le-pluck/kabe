@@ -2,61 +2,36 @@
 import { userAccountApi } from "@/apis";
 import { onMounted, ref, reactive, defineAsyncComponent } from "vue";
 import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
+import PublisherProfile from "../profile/PublisherProfile.vue";
 
 interface Props {
-  comment: Pick<
-    CommentDTO,
-    "content" | "userId" | "parentId" | "parentType" | "createTime"
-  >;
+  comment: CommentResponseDTO;
 }
 
 const props = defineProps<Props>();
-
-interface Resource {
-  avatar: string;
-}
-const resource = reactive<Resource>({
-  avatar: "https://robohash.org/1.png?set=set4&size=150x150&bgset=bg2",
-});
-
-onMounted(async () => {
-  resource.avatar = (
-    await userAccountApi.getAvatar(props.comment.userId)
-  ).avatar;
-  // 浪费请求
-});
-
-const PublisherProfile = defineAsyncComponent(
-  () => import("@/components/post/PublisherProfile.vue")
-);
 </script>
 
 <template>
-  <div style="border: 1px solid `#6c5ce7`">
+  <div :class="{'child-comment': comment.parentType == 'comment'}">
     <v-container>
       <v-row>
         <v-col>
-          <Suspense>
-            <template #default>
-              <PublisherProfile
-                :publisher-id="comment.userId"
-                :publish-time="comment.createTime"
-              ></PublisherProfile>
-            </template>
-            <template #fallback>
-              <v-skeleton-loader
-                type="list-item-avatar-two-line"
-              ></v-skeleton-loader>
-            </template>
-          </Suspense>
+          <PublisherProfile
+            :id="comment.userId"
+            :avatar="comment.avatar"
+            :nickname="comment.nickname"
+            :publish-time="comment.createTime"
+          >
+          </PublisherProfile>
         </v-col>
       </v-row>
 
       <div
-        class="padding-left-inner margin-bottom"
+        class="padding-left-inner margin-bottom reply-tip"
         v-if="comment.parentType === 'comment'"
       >
-        回复 {{ props.comment.parentId }}
+        <span>回复</span>
+        <RouterLink to=""> @{{ props.comment.parentNickname }}</RouterLink>
       </div>
 
       <v-row class="padding-left-inner">
@@ -77,5 +52,24 @@ const PublisherProfile = defineAsyncComponent(
 }
 .padding-left-inner {
   padding-left: 96px;
+}
+.reply-tip {
+  a {
+    text-decoration: none;
+    color: $link-color;
+    &:hover {
+      color: $link-color-hover;
+    }
+  }
+}
+.comment {
+  
+}
+.child-comment {
+  background-color: $dynamic-background-low-emphasis;
+  border: solid #00000000 1px;
+  border-radius: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 </style>
