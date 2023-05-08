@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { commentApi } from "@/apis";
 import Comment from "./Comment.vue";
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import { reactive } from "vue";
 import { CommentResponse } from "@/apis/comment/class";
 import CommentCreator from "./CommentCreator.vue";
@@ -11,43 +11,55 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-interface Pagination {
-  index: number;
-  pages: number;
-  size: number;
-  maxVisible: number;
-}
-const pagination = reactive<Pagination>({
-  index: 1,
+const pagination = reactive<PaginationManipulator>({
+  pageIndex: 1,
   pages: 1,
-  size: 5,
+  pageSize: 10,
   maxVisible: 7,
+  sortingCriteria: "latest",
 });
 
 const commentPage = ref(
-  await commentApi.getPostCommentsPaged(
-    props.postId,
-    pagination.index,
-    pagination.size
-  )
+  await commentApi.getPostCommentsPaged(props.postId, pagination)
 );
+console.log("commentPage: ", commentPage);
 pagination.pages = commentPage.value.pages;
 
 console.log("commentPage", commentPage.value);
 
-const onModelValueUpdate = async (index: number) => {
+const onModelValueUpdate = async () => {
   commentPage.value = await commentApi.getPostCommentsPaged(
     props.postId,
-    pagination.index,
-    pagination.size
+    pagination
   );
   pagination.pages = commentPage.value.pages;
+};
+
+const comment = reactive<Omit<CommentCreateDTO, "content">>({
+  parentType: "post",
+  logicalParentId: props.postId,
+  storageParentId: props.postId,
+});
+
+const onCommentCreatorSubmit = () => {
+  onModelValueUpdate();
+};
+
+const onCommentReply = () => {
+  onModelValueUpdate();
+};
+
+const onCommentDelete = () => {
+  onModelValueUpdate();
 };
 </script>
 
 <template>
   <CommentCreator
-    label="回复sss"
+    class="post-comment-creator"
+    label="发布你的评论，让社区更活跃！~"
+    :comment="comment"
+    @submit="onCommentCreatorSubmit"
   ></CommentCreator>
   <v-expansion-panels variant="popout" multiple>
     <v-expansion-panel
@@ -55,7 +67,11 @@ const onModelValueUpdate = async (index: number) => {
       :key="postCommentItem.comment.id"
     >
       <v-expansion-panel-title>
-        <Comment :comment="new CommentResponse(postCommentItem.comment)">
+        <Comment
+          :comment="new CommentResponse(postCommentItem.comment)"
+          @reply="onCommentReply"
+          @delete="onCommentDelete"
+        >
         </Comment>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
@@ -63,6 +79,8 @@ const onModelValueUpdate = async (index: number) => {
           v-for="childCommentItem in postCommentItem.children"
           :key="childCommentItem.id"
           :comment="new CommentResponse(childCommentItem)"
+          @reply="onCommentReply"
+          @delete="onCommentDelete"
         >
         </Comment>
         <div
@@ -76,7 +94,7 @@ const onModelValueUpdate = async (index: number) => {
   </v-expansion-panels>
 
   <v-pagination
-    v-model="pagination.index"
+    v-model="pagination.pageIndex"
     :length="pagination.pages"
     :total-visible="
       pagination.pages < pagination.maxVisible
@@ -91,5 +109,8 @@ const onModelValueUpdate = async (index: number) => {
 .without-child-comment {
   text-align: center;
   opacity: $dynamic-medium-emphasis-opacity;
+}
+.post-comment-creator {
+  margin-bottom: 1rem;
 }
 </style>

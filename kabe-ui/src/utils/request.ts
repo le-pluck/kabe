@@ -88,7 +88,7 @@ instance.interceptors.response.use(
         message = "服务器故障";
         break;
       default:
-        message = "网络连接故障";
+        message = `未经处理的错误，错误代码 ${status}。`;
     }
     console.error(message);
     return Promise.reject(error);

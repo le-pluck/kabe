@@ -1,5 +1,6 @@
 package com.example.kabesystem.model;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tag {
-  private Long postId;
-  private String name;
-  private String icon;
+public class CommentFavor implements Serializable {
+
+  private Long userId;
+
+  private Long commentId;
 }

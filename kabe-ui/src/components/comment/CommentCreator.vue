@@ -4,10 +4,11 @@ import { reactive, ref } from "vue";
 
 interface Props {
   label: string;
-  comment: CommentCreateDTO;
+  comment: Omit<CommentCreateDTO, "content">;
 }
 
 const props = defineProps<Props>();
+const emit = defineEmits<{ (e: "submit"): void }>();
 
 type ValidationResult = string | boolean;
 type ValidationRule =
@@ -30,31 +31,38 @@ const focused = (focused: boolean) => {
   if (focused) {
     showActions.value = true;
   }
-  console.log("content", content.value);
 };
 const onCancelClick = () => {
   showActions.value = false;
+  content.value = undefined;
 };
 const onSubmitClick = async () => {
   if (!formValid.value) return;
 
-  const success = await commentApi.createComment({
-    parentType: props.comment.parentType,
-    storageParentId: props.comment.storageParentId,
-    logicalParentId: props.comment.logicalParentId,
-    content: content.value,
-  });
+  const success = await commentApi
+    .createComment({
+      parentType: props.comment.parentType,
+      storageParentId: props.comment.storageParentId,
+      logicalParentId: props.comment.logicalParentId,
+      content: content.value,
+    })
+    .catch((err) => {
+      alert("评论失败");
+      // TOBE-PERFECTED:
+      // 保留评论内容不变
+      // 直接在 CommentCreator 组件内展示一个提示
+      return false;
+    });
 
   if (success) {
-    // 巴拉巴拉
-  } else {
-    // 巴拉巴拉
+    content.value = undefined;
+    emit("submit");
   }
 };
 </script>
 
 <template>
-  <v-form v-model="formValid">
+  <v-form v-model="formValid" @click.stop>
     <v-textarea
       counter
       rows="1"
@@ -96,10 +104,10 @@ const onSubmitClick = async () => {
     }
   }
 }
-</style>
 
-<style scoped>
-.v-input >>> .v-input__details {
-  margin-right: 10rem;
+.v-input {
+  :deep(.v-input__details) {
+    margin-right: 10rem;
+  }
 }
 </style>

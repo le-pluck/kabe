@@ -21,52 +21,61 @@ const CommentList = defineAsyncComponent(
 </script>
 
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <Suspense>
-          <template #default>
-            <CommentList :postId="postId"></CommentList>
-          </template>
-          <template #fallback>
-            <v-skeleton-loader
-              type="list-item-avatar-two-line"
-            ></v-skeleton-loader>
-          </template>
-        </Suspense>
-      </v-col>
-    </v-row>
+  <div class="post-viewer">
+    <v-container>
+      <v-row>
+        <v-col>
+          <div class="no-editor">
+            <h1>
+              {{ post.title }}
+            </h1>
+          </div>
 
-    <v-row>
-      <v-col>
-        <div class="no-editor">
-          <h1>
-            {{ post.title }}
-          </h1>
-        </div>
+          <div class="no-editor">
+            {{ post.subtitle }}
+          </div>
+        </v-col>
+      </v-row>
 
-        <div class="no-editor">
-          {{ post.subtitle }}
-        </div>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col>
-        <div class="ql-snow">
-          <div class="post-viewer ql-editor" :innerHTML="post.html"></div>
-        </div>
-      </v-col>
-    </v-row>
-  </v-container>
+      <v-row>
+        <v-col>
+          <div class="ql-snow">
+            <div class="post-reader ql-editor" :innerHTML="post.html"></div>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container>
+      <v-row>
+        <v-col>
+          <Suspense>
+            <template #default>
+              <CommentList :postId="postId"></CommentList>
+            </template>
+            <template #fallback>
+              <v-skeleton-loader
+                type="list-item-avatar-two-line"
+              ></v-skeleton-loader>
+            </template>
+          </Suspense>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .no-editor {
   padding-left: $inner-editor-padding-width;
 }
-.post-viewer {
+.post-reader {
   padding-top: 0;
   font-size: $post-viewer-base-fontsize;
+}
+
+.post-viewer {
+  & > .v-container:last-child {
+    margin-top: $session-margin-top;
+  }
 }
 </style>

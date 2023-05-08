@@ -6,9 +6,11 @@ interface CommentResponseDTO {
   content: string;
   createTime: Date;
   userId: number;
+  favor: number;
   nickname: string;
   avatar: string;
   parentNickname: string;
+  favored: boolean;
 }
 
 interface CommentCreateDTO

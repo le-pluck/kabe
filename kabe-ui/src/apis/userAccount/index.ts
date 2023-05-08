@@ -6,9 +6,21 @@ const login = (
   return axios.post<BearerToken>("/user/account/token", userAccount);
 };
 
-const any = () => {
-  return axios.get<any>("/user/account/any");
-};
+/**
+ * @description 验证 token 并获取 userId
+ */
+const getUserId = async () => {
+  return axios.get<number>("/user/account/id");
+}
+
+/**
+ * @description 验证 token 并获取 Permission
+ */
+const getPermission = async () => {
+  return axios.get<Permission>("/user/account/permission");
+}
+
+
 
 const getAvatar = (userId?: number) => {
   const url =
@@ -47,7 +59,8 @@ const getNickname = (userId: number) => {
 
 export default {
   login,
-  any,
+  getUserId,
+  getPermission,
   getAvatar,
   getInfo,
   sendVerificationMail,

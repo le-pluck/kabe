@@ -6,9 +6,11 @@ class CommentResponse implements CommentResponseDTO {
   content: string;
   createTime: Date;
   userId: number;
+  favor: number;
   nickname: string;
   avatar: string;
   parentNickname: string;
+  favored: boolean;
 
   constructor(commentResponseDTO: CommentResponseDTO) {
     this.id = commentResponseDTO.id;
@@ -18,9 +20,11 @@ class CommentResponse implements CommentResponseDTO {
     this.content = commentResponseDTO.content;
     this.createTime = new Date(commentResponseDTO.createTime);
     this.userId = commentResponseDTO.userId;
+    this.favor = commentResponseDTO.favor;
     this.nickname = commentResponseDTO.nickname;
     this.avatar = commentResponseDTO.avatar;
     this.parentNickname = commentResponseDTO.parentNickname;
+    this.favored = commentResponseDTO.favored;
   }
 }
 
