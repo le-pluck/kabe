@@ -15,8 +15,8 @@ $dynamic-medium-emphasis-opacity: var(--v-medium-emphasis-opacity);
 $color: $dynamic-on-background;
 $color-hover: $core-color;
 
-$link-color: #699aff;
-$link-color-hover: #6c5ce7;
+$link-color: $core-color;
+$link-color-hover: #3720e7;
 
 $lowest-emphasis-opacity: 0.0;
 
@@ -77,3 +77,13 @@ $avatar-height-default: 40px;
 // --v-pressed-opacity: 0.16;
 // --v-dragged-opacity: 0.08;
 //
+
+.no-text-decoration {
+  text-decoration: none;
+}
+.link-color {
+  color: $link-color;
+}
+.link-color:hover {
+  color: $link-color-hover;
+}

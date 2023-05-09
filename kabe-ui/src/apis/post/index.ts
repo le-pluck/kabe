@@ -23,9 +23,15 @@ const getPostPreviewsLatestPaged = async (
     })
   );
 };
+
+const deletePostById = async (postId: PostId) => {
+  return await axios.delete(`/post/${postId}`);
+};
+
 export default {
   postPost,
   getPost,
   getPostPreviewsByPosterId,
   getPostPreviewsLatestPaged,
+  deletePostById,
 };

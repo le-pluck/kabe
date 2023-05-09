@@ -80,6 +80,7 @@ public class UserAccountController {
     map.put("userId", userId);
     map.put("isUploader", isUploader);
     map.put("isAdmin", isAdmin);
+
     return Result.success(map);
   }
 }

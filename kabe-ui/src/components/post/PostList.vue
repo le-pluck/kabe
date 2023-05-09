@@ -39,7 +39,7 @@ const onModelValueUpdate = async (index: number) => {
     v-bind="item"
   ></PostPreviewer>
   <v-pagination
-    v-model="pagination.index"
+    v-model="pagination.pageIndex"
     :length="pagination.pages"
     :total-visible="
       pagination.pages < pagination.maxVisible

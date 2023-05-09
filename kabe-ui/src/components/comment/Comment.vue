@@ -56,6 +56,7 @@ const onReplyClick = () => {
 };
 
 const onReplySubmit = () => {
+  showReply.value = false;
   emit("reply");
 };
 
@@ -119,14 +120,6 @@ const onDeleteClick = async () => {
           >
             回复
           </v-btn>
-          <v-expand-transition>
-            <CommentCreator
-              :label="'回复' + comment.nickname"
-              :comment="replyPropsComment"
-              v-if="showReply"
-              @submit="onReplySubmit"
-            ></CommentCreator>
-          </v-expand-transition>
 
           <v-btn
             color="warning"
@@ -141,6 +134,15 @@ const onDeleteClick = async () => {
           >
             删除
           </v-btn>
+          
+          <v-expand-transition>
+            <CommentCreator
+              :label="'回复' + comment.nickname"
+              :comment="replyPropsComment"
+              v-if="showReply"
+              @submit="onReplySubmit"
+            ></CommentCreator>
+          </v-expand-transition>
         </v-col>
       </v-row>
     </v-container>

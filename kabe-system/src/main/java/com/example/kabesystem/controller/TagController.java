@@ -3,6 +3,7 @@ package com.example.kabesystem.controller;
 import com.example.kabesystem.model.Tag;
 import com.example.kabesystem.service.TagService;
 import com.example.kabesystem.util.Result;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,9 @@ public class TagController {
     }
 
     @PostMapping("/{postId}")
-    public Result<?> postPostTags(@RequestBody List<Tag> tags, @PathVariable(value = "postId") Long postId) {
-        return Result.success(tagService.postPostTags(tags, postId));
+    public Result<?> createPostTags(
+            @RequestBody List<Tag> tags, @PathVariable(value = "postId") Long postId) {
+        return Result.success(tagService.createPostTags(tags, postId));
     }
 
     @GetMapping("")

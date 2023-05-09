@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface TagService extends IService<Tag> {
     List<Tag> getTagsByPostId(Long postId);
+
     List<Tag> getTags();
+
     List<Long> getPostIdsByTagName(String name);
-    boolean postPostTags(List<Tag> tags, Long postId);
+
+    boolean createPostTags(List<Tag> tags, Long postId);
 }

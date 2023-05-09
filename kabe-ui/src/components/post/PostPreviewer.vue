@@ -23,6 +23,10 @@ const PublisherProfileAsync = defineAsyncComponent(
 const PostTags = defineAsyncComponent(
   () => import("@/components/tag/PostTags.vue")
 );
+const showPostTags = ref(true);
+const onPostTagsLoaded = (show: boolean) => {
+  showPostTags.value = show;
+};
 </script>
 
 <template>
@@ -53,10 +57,10 @@ const PostTags = defineAsyncComponent(
       </v-card-subtitle>
     </v-card-item>
 
-    <v-card-text>
+    <v-card-text v-show="showPostTags">
       <Suspense>
         <template #default>
-          <PostTags :post-id="props.id"></PostTags>
+          <PostTags :post-id="props.id" @loaded="onPostTagsLoaded"></PostTags>
         </template>
         <template #fallback>
           <!-- 下一行报错 "chip@3" 不可分配，是由于 vuetify 提供了此功能，但未对 ts 完善导致的。等待开发后续更新。 -->

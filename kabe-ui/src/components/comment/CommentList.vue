@@ -75,14 +75,19 @@ const onCommentDelete = () => {
         </Comment>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
-        <Comment
-          v-for="childCommentItem in postCommentItem.children"
+        <div
+          v-for="(childCommentItem, index) in postCommentItem.children"
           :key="childCommentItem.id"
-          :comment="new CommentResponse(childCommentItem)"
-          @reply="onCommentReply"
-          @delete="onCommentDelete"
         >
-        </Comment>
+          <v-divider v-if="index != 0"></v-divider>
+          <Comment
+            :comment="new CommentResponse(childCommentItem)"
+            @reply="onCommentReply"
+            @delete="onCommentDelete"
+          >
+          </Comment>
+        </div>
+
         <div
           class="without-child-comment"
           v-if="postCommentItem.children.length === 0"

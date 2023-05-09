@@ -12,7 +12,8 @@ const getPostIdsByTag = (tagName: TagName) => {
   return axios.get<PostId[]>(`/tag/post/ids/${tagName}`);
 };
 
-const postPostTags = (tags: Tag[], postId: PostId) => {
+const createPostTags = (tags: Tag[], postId: PostId) => {
+  console.log("createPostTags => ", tags);
   return axios.post<boolean>(`/tag/${postId}`, tags);
 };
 
@@ -20,5 +21,5 @@ export default {
   getTagsByPostId,
   getTags,
   getPostIdsByTag,
-  postPostTags,
+  createPostTags,
 };

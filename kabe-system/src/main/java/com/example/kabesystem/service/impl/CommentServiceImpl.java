@@ -1,7 +1,6 @@
 package com.example.kabesystem.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.kabesystem.dto.comment.CommentResponseDTO;
@@ -69,6 +68,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
         resultMap.put("pages", mapsPage.getPages());
         resultMap.put("total", mapsPage.getTotal());
+
+        if (mapsPage.getTotal() == 0) {
+            return resultMap;
+        }
 
         List<Map<String, Object>> postCommentMaps = mapsPage.getRecords();
         List<CommentResponseDTO> postCommentResponseDTOList = new ArrayList<>();
@@ -167,7 +170,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         boolean success = baseMapper.delete(wrapper) == 1;
 
         if (success) {
-            commentFavorService.removeComment(commentId);
+            commentFavorService.removeAllFavorByCommentId(commentId);
         }
 
         return success;
@@ -175,7 +178,50 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public boolean removeCommentAdmin(Long commentId) {
-        commentFavorService.removeComment(commentId);
+        commentFavorService.removeAllFavorByCommentId(commentId);
         return baseMapper.deleteById(commentId) == 1;
+    }
+
+    @Override
+    public List<Long> getAllCommentIdsByPostId(Long postId) {
+        LambdaQueryWrapper<Comment> postCommentWrapper = new LambdaQueryWrapper<>();
+        postCommentWrapper
+                .select(Comment::getId)
+                .eq(Comment::getParentType, "post")
+                .eq(Comment::getLogicalParentId, postId);
+        List<Comment> postComments = baseMapper.selectList(postCommentWrapper);
+
+        if (postComments.size() == 0) {
+            return new ArrayList<>();
+        }
+
+        List<Long> postCommentIds = new ArrayList<>();
+        for (Comment postComment : postComments) {
+            postCommentIds.add(postComment.getId());
+        }
+
+
+        LambdaQueryWrapper<Comment> childCommentWrapper = new LambdaQueryWrapper<>();
+        childCommentWrapper
+                .select(Comment::getId)
+                .eq(Comment::getParentType, "comment")
+                .in(Comment::getLogicalParentId, postCommentIds);
+        List<Comment> childComments = baseMapper.selectList(childCommentWrapper);
+
+        List<Long> allCommentIds = new ArrayList<>(postCommentIds);
+        for (Comment childComment : childComments) {
+            allCommentIds.add(childComment.getId());
+        }
+
+        return allCommentIds;
+    }
+
+    @Override
+    public boolean removeAllCommentByCommentIds(List<Long> commentIds) {
+        commentFavorService.removeAllFavorByCommentIds(commentIds);
+
+        LambdaQueryWrapper<Comment> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(Comment::getId, commentIds);
+        return baseMapper.delete(wrapper) > 0;
     }
 }
