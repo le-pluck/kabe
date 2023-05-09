@@ -103,6 +103,7 @@ const onTagAppenderChange = (tagList: Tag[]) => {
 <style lang="scss" scoped>
 .container {
   padding-top: $page-padding;
+  padding-bottom: $page-padding;
 }
 .post-area {
   border: $small-border-width solid $core-color;

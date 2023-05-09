@@ -38,5 +38,6 @@ const SubmissionList = defineAsyncComponent(
 <style lang="scss" scoped>
 .container {
   padding-top: $page-padding;
+  padding-bottom: $page-padding;
 }
 </style>

@@ -38,5 +38,6 @@ const props = defineProps<Props>();
 <style lang="scss" scoped>
 .container {
   padding-top: $page-padding;
+  padding-bottom: $page-padding;
 }
 </style>
