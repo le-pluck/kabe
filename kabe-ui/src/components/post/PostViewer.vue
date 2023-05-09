@@ -84,7 +84,7 @@ const onPostTagsLoaded = (show: boolean) => {
                   <v-btn
                     color="primary"
                     variant="text"
-                    icon="mdi-vuetify"
+                    icon="mdi-dots-horizontal"
                     v-bind="props"
                   >
                   </v-btn>

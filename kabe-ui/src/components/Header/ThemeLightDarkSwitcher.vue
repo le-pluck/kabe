@@ -5,8 +5,11 @@ import { useTheme } from "vuetify";
 
 const theme = useTheme();
 
+const emit = defineEmits<{ (e: "themeChange", theme: Theme):void }>();
+
 const toggleTheme = () => {
   theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
+  emit("themeChange", theme.global.name.value as Theme);
 };
 </script>
 

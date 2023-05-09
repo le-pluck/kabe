@@ -4,6 +4,10 @@ import ThemeLightDarkSwitcher from "@/components/header/ThemeLightDarkSwitcher.v
 import { error } from "console";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import logoOnDark from "@/assets/logo_on_dark.png";
+import logoOnLight from "@/assets/logo_on_light.png";
+
+import { store } from "@/store";
 
 const router = useRouter();
 
@@ -82,6 +86,19 @@ const login = async () => {
 const onCloseClick = () => {
   loginWarning.show = false;
 };
+
+const getSrcByTheme = (theme: Theme) => {
+  switch (theme) {
+    case "dark":
+      return logoOnDark;
+    case "light":
+      return logoOnLight;
+  }
+};
+const logoSrc = ref<string>(getSrcByTheme(store.theme.get()));
+const onThemeChange = (theme: Theme) => {
+  logoSrc.value = getSrcByTheme(theme);
+};
 </script>
 
 <template>
@@ -92,7 +109,7 @@ const onCloseClick = () => {
           <v-container>
             <v-row align="center">
               <v-col>
-                <div class="logo-text">KABE</div>
+                <v-img :src="logoSrc" class="logo"></v-img>
               </v-col>
             </v-row>
             <v-form v-model="formValidation.valid">
@@ -147,7 +164,9 @@ const onCloseClick = () => {
                   <router-link to="/sign-up"> 注册账号 </router-link>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <ThemeLightDarkSwitcher></ThemeLightDarkSwitcher>
+                  <ThemeLightDarkSwitcher
+                    @theme-change="onThemeChange"
+                  ></ThemeLightDarkSwitcher>
                 </v-col>
               </v-row>
             </v-form>
@@ -174,12 +193,14 @@ const onCloseClick = () => {
       max-width: 500px;
       .card-inside {
         padding: $area-padding;
-        .logo-text {
+        .logo {
           text-align: center;
           font-size: 30px;
           color: #91a1f7;
           font-weight: bold;
+          margin: auto;
           margin-bottom: 30px;
+          width: 70%;
         }
         a {
           text-decoration: none;

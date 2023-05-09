@@ -1,5 +1,9 @@
 // 已重构： 将定义在此处的 UserAccount 等转移到 "src/apis/**/types.ts" 了
 
+// 主题相关
+
+type Theme = "dark" | "light";
+
 // 分页相关
 
 type SortingCriteria = "latest" | "hottest";
