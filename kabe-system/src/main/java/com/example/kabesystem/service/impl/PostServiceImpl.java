@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.kabesystem.mapper.PostMapper;
 import com.example.kabesystem.model.Post;
+import com.example.kabesystem.service.CommentService;
 import com.example.kabesystem.service.PostService;
+import com.example.kabesystem.service.TagService;
+
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,14 +19,22 @@ import java.util.Map;
 @Service
 public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements PostService {
 
+    private final CommentService commentService;
+    private final TagService tagService;
+
+    public PostServiceImpl(CommentService commentService, TagService tagService) {
+        this.commentService = commentService;
+        this.tagService = tagService;
+    }
+
     @Override
     public Post selectById(Long id) {
         return baseMapper.selectById(id);
     }
 
     @Override
-    public Long postPost(Post post, Long posterId) {
-        Timestamp timestamp = new Timestamp(new Date().getTime());
+    public Long createPost(Post post, Long posterId) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         post.setPosterId(posterId);
         post.setReaction(0);
         post.setStar(0);
@@ -55,6 +65,8 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
                 .select("id, poster_id, title, subtitle, reaction, star, create_time, update_time")
                 .orderByDesc("create_time");
 
+        System.out.println(pageIndex + "/" + pageSize);
+
         Page<Post> page = new Page<>(pageIndex, pageSize);
 
         page = baseMapper.selectPage(page, queryWrapper);
@@ -73,5 +85,36 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
                 .select("id, poster_id, title, subtitle, reaction, star, create_time, update_time")
                 .eq("poster_id", posterId);
         return baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public boolean deletePostById(Long postId, Long userId) {
+        Post post = baseMapper.selectById(postId);
+        if (!post.getPosterId().equals(userId)) {
+            return false;
+        }
+
+        tagService.removeTagsByPostId(postId);
+
+        List<Long> commentIds = commentService.getAllCommentIdsByPostId(postId);
+
+        if (commentIds.size() == 0) {
+            return baseMapper.deleteById(postId) == 1;
+        }
+
+        return commentService.removeAllCommentByCommentIds(commentIds)
+                && baseMapper.deleteById(postId) == 1;
+    }
+
+    @Override
+    public boolean deletePostByIdAdmin(Long postId) {
+        List<Long> commentIds = commentService.getAllCommentIdsByPostId(postId);
+
+        if (commentIds.size() == 0) {
+            return baseMapper.deleteById(postId) == 1;
+        }
+
+        return commentService.removeAllCommentByCommentIds(commentIds)
+                && baseMapper.deleteById(postId) == 1;
     }
 }

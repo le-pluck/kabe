@@ -7,7 +7,10 @@ import { resolve } from "path";
 export default defineConfig({
   plugins: [
     vue(),
-    vuetify({ autoImport: true }),
+    vuetify({
+      autoImport: true,
+      styles: { configFile: "src/plugins/vuetifysetting.scss" },
+    }),
     vueJsx({
       // options are passed on to @vue/babel-plugin-jsx
     }),

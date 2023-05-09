@@ -2,33 +2,40 @@
 import { userAccountApi } from "@/apis";
 import { isReactive } from "vue";
 import { reactive } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 interface Props {
-  posterId: number;
-  createTime: Date;
+  id: number;
+  avatar: string;
+  nickname: string;
+  publishTime: Date;
 }
 
 const props = defineProps<Props>();
 
-const userAccount: Omit<Required<UserAccount>, "password"> = reactive(
-  await userAccountApi.getInfo(props.posterId)
-);
+const onNicknameClick = () => {
+  console.log("onNicknameClick");
+  router.push("/sign-in")
+}
+
 </script>
 
 <template>
   <div class="profile-warp">
     <v-avatar size="x-large" class="avatar">
-      <v-img :src="userAccount.avatar"></v-img>
+      <v-img :src="avatar"></v-img>
     </v-avatar>
     <div class="text">
       <div class="nickname">
-        <v-btn variant="text">
-          {{ userAccount.nickname }}
+        <v-btn variant="text" @click.stop="onNicknameClick">
+          {{ nickname }}
         </v-btn>
       </div>
       <div class="post-time">
         <v-btn variant="text" disabled>
-          发表于 {{ createTime.format("yyyy-MM-dd HH:mm:ss") }}
+          发表于 {{ publishTime.format("yyyy-MM-dd HH:mm:ss") }}
         </v-btn>
       </div>
     </div>

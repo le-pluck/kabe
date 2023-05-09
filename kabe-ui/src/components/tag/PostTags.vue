@@ -8,7 +8,10 @@ interface Props {
 
 const props = defineProps<Props>();
 
+const emit = defineEmits<{(e: "loaded", show: boolean):void}>();
+
 const tags = reactive(await tagApi.getTagsByPostId(props.postId));
+emit("loaded", tags.length > 0);
 </script>
 
 <template>

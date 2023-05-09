@@ -13,3 +13,9 @@ interface UserInfo extends Omit<UserAccount, "password"> {}
 
 type BearerToken = string;
 type AvatarBase64 = string;
+
+interface Permission {
+  userId: number;
+  isUploader: boolean;
+  isAdmin: boolean;
+}

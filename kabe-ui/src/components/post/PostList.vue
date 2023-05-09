@@ -11,27 +11,24 @@ import { reactive, ref } from "vue";
 
 interface Props {}
 
-interface Pagination {
-  index: number;
-  pages: number;
-  size: number;
-  maxVisible: number;
-}
 
-const pagination = reactive<Pagination>({
-  index: 1,
+const pagination = reactive<PaginationManipulator>({
+  pageIndex: 1,
   pages: 1,
-  size: 3,
+  pageSize: 3,
   maxVisible: 7,
+  sortingCriteria: "latest",
 });
 
+
+// TODO: 选择排序方式
 const postPreviewsPaged = ref<PostPreviewsPaged>(
-  await postApi.getPostPreviewsLatestPaged(pagination.index, pagination.size)
+  await postApi.getPostPreviewsLatestPaged(pagination.pageIndex, pagination.pageSize)
 );
 pagination.pages = postPreviewsPaged.value.pages;
 
 const onModelValueUpdate = async (index: number) => {
-  postPreviewsPaged.value = await postApi.getPostPreviewsLatestPaged(pagination.index, pagination.size);
+  postPreviewsPaged.value = await postApi.getPostPreviewsLatestPaged(pagination.pageIndex, pagination.pageSize);
 };
 </script>
 
@@ -42,7 +39,7 @@ const onModelValueUpdate = async (index: number) => {
     v-bind="item"
   ></PostPreviewer>
   <v-pagination
-    v-model="pagination.index"
+    v-model="pagination.pageIndex"
     :length="pagination.pages"
     :total-visible="
       pagination.pages < pagination.maxVisible

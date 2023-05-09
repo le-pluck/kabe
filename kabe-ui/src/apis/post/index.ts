@@ -5,7 +5,7 @@ const postPost = (post: Post | NewPostDTO) => {
   return axios.post<PostId>("/post", post);
 };
 
-const getPost = async (id: PostId) => {
+const getPost = async (id: PostId): Promise<Post> => {
   return new Post(await axios.get<PostDTO>(`/post/${id}`));
 };
 
@@ -23,9 +23,15 @@ const getPostPreviewsLatestPaged = async (
     })
   );
 };
+
+const deletePostById = async (postId: PostId) => {
+  return await axios.delete(`/post/${postId}`);
+};
+
 export default {
   postPost,
   getPost,
   getPostPreviewsByPosterId,
   getPostPreviewsLatestPaged,
+  deletePostById,
 };

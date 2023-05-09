@@ -99,4 +99,9 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         }
         return map;
     }
+
+    @Override
+    public String getNickname(Long userId) {
+        return baseMapper.selectById(userId).getNickname();
+    }
 }

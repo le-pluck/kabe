@@ -23,6 +23,10 @@ public class TokenCheckInterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(tokenCheckInterceptor)
                 .addPathPatterns("/user/**")
                 .addPathPatterns("/post/**")
-                .excludePathPatterns("/user/account/token");
+                .addPathPatterns("/mail/**")
+                .addPathPatterns("/tag/**")
+                .addPathPatterns("/comment/**")
+                .excludePathPatterns("/user/account/token")
+                .excludePathPatterns("/mail/verification");
     }
 }

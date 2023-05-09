@@ -13,6 +13,8 @@ let avatarReactive = reactive({
 userAccountApi.getAvatar().then((data) => {
   avatarReactive.avatar = data.avatar;
 });
+
+const userMenuItems = [{ label: "用户中心", path: "/create-post" }];
 </script>
 
 <template>
@@ -24,22 +26,47 @@ userAccountApi.getAvatar().then((data) => {
       <div class="right">
         <router-link to="/home"><v-btn> Home </v-btn></router-link>
         <router-link to="/post-exp"><v-btn> Post-exp </v-btn></router-link>
-        <router-link to="/create-post"
-          ><v-btn> create-post </v-btn></router-link
-        >
+        <router-link to="/create-post">
+          <v-btn> create-post </v-btn>
+        </router-link>
         <router-link to="/sign-in"><v-btn> sign-in </v-btn></router-link>
         <router-link to="/sign-up"><v-btn> sign-up </v-btn></router-link>
         <span>|</span>
 
         <router-link to="/create-post">
-          <v-btn variant="outlined"> 发布帖子 </v-btn>
+          <v-btn color="primary" variant="outlined"> 发布帖子 </v-btn>
         </router-link>
 
-        <v-avatar
-          color="surface-variant"
-          :image="avatarReactive.avatar"
-          class="avatar"
-        ></v-avatar>
+        <v-menu transition="fab-transition">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              icon="mdi-vuetify"
+              variant="text"
+              class="avatar"
+              v-bind="props"
+            >
+              <v-avatar
+                color="surface-variant"
+                :image="avatarReactive.avatar"
+              ></v-avatar>
+            </v-btn>
+          </template>
+          <v-list>
+            <router-link
+              v-for="(menuItem, index) in userMenuItems"
+              :key="index"
+              :to="menuItem.path"
+              class="no-text-decoration link-color"
+            >
+              <v-list-item :value="index">
+                <v-list-item-title>
+                  {{ menuItem.label }}
+                </v-list-item-title>
+              </v-list-item>
+            </router-link>
+          </v-list>
+        </v-menu>
+
         |
         <theme-light-dark-switcher></theme-light-dark-switcher>
       </div>

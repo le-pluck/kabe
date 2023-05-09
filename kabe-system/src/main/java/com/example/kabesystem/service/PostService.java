@@ -8,9 +8,18 @@ import java.util.Map;
 
 public interface PostService extends IService<Post> {
     Post selectById(Long id);
-    Long postPost(Post post, Long posterId);
+
+    Long createPost(Post post, Long posterId);
+
     Post getPostPreviewById(Long id);
+
     List<Post> getPostPreviewsByIds(List<Long> ids);
+
     Map<String, Object> getPostPreviewsLatestPaged(Integer pageIndex, Integer pageSize);
+
     List<Post> getPostPreviewsByPosterId(Long posterId);
+
+    boolean deletePostById(Long postId, Long userId);
+
+    boolean deletePostByIdAdmin(Long postId);
 }

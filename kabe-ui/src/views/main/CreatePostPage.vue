@@ -24,13 +24,15 @@ const post = reactive<NewPostDTO>({
   html: "",
 });
 
-let tags: Tag[];
+let tags: Tag[] = [];
 
 const onPostClicked = async () => {
   post.ops = content.value.ops;
   post.html = editor.value.getHTML?.();
   const postId = await postApi.postPost(post);
-  const success = await tagApi.postPostTags(tags, postId);
+  console.log("tags.length > 0 =>", tags.length > 0);
+  const success =
+    tags.length > 0 ? await tagApi.createPostTags(tags, postId) : true;
   router.push(`/post/${postId}`);
 };
 
@@ -70,6 +72,7 @@ const onTagAppenderChange = (tagList: Tag[]) => {
               ref="editor"
               v-model:content="content"
               class="min-height-500px_ql-editor-parent"
+              toolbar="full"
             />
           </div>
         </v-col>
