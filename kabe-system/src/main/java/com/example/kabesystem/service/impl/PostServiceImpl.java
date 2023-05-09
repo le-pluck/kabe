@@ -7,6 +7,7 @@ import com.example.kabesystem.mapper.PostMapper;
 import com.example.kabesystem.model.Post;
 import com.example.kabesystem.service.CommentService;
 import com.example.kabesystem.service.PostService;
+import com.example.kabesystem.service.TagService;
 
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,11 @@ import java.util.Map;
 public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements PostService {
 
     private final CommentService commentService;
+    private final TagService tagService;
 
-    public PostServiceImpl(CommentService commentService) {
+    public PostServiceImpl(CommentService commentService, TagService tagService) {
         this.commentService = commentService;
+        this.tagService = tagService;
     }
 
     @Override
@@ -91,17 +94,13 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             return false;
         }
 
-        List<Long> commentIds = commentService.getAllCommentIdsByPostId(postId);
+        tagService.removeTagsByPostId(postId);
 
-        System.out.println("commentIds = " + commentIds);
-        System.out.println("commentIds.size() = " + commentIds.size());
-        System.out.println("commentIds.size() == 0 = " + (commentIds.size() == 0));
+        List<Long> commentIds = commentService.getAllCommentIdsByPostId(postId);
 
         if (commentIds.size() == 0) {
             return baseMapper.deleteById(postId) == 1;
         }
-
-        System.out.println("commentIds.size > 0");
 
         return commentService.removeAllCommentByCommentIds(commentIds)
                 && baseMapper.deleteById(postId) == 1;

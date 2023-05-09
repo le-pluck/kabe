@@ -1,5 +1,6 @@
 package com.example.kabesystem.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.kabesystem.mapper.TagMapper;
@@ -19,6 +20,13 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         QueryWrapper<Tag> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("name, icon").eq("post_id", postId);
         return baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public void removeTagsByPostId(Long postId) {
+        LambdaQueryWrapper<Tag> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Tag::getPostId, postId);
+        baseMapper.delete(wrapper);
     }
 
     @Override
