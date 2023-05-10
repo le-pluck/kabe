@@ -32,4 +32,5 @@ export const store = reactive({
     isUploader: false,
     isAdmin: false,
   }),
+  theme: new State<Theme>("light"),
 });

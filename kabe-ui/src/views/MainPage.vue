@@ -18,6 +18,8 @@ import Footer from "@/components/Footer.vue";
 .main {
   flex: 1 0 auto;
   display: flex;
+  background-color: $dynamic-background-low-emphasis;
+  
   .main-container {
     flex-grow: 1;
     margin: 0 auto;

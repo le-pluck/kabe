@@ -36,6 +36,24 @@ public class PostController {
         return Result.success(postService.getPostPreviewsLatestPaged(pageIndex, pageSize));
     }
 
+    @GetMapping("/preview/latest/poster/{posterId}")
+    public Result<?> getPostPreviewsLatestPagedByPosterId(
+            @PathVariable(value = "posterId") Long posterId,
+            @RequestParam Integer pageIndex,
+            @RequestParam Integer pageSize) {
+        return Result.success(
+                postService.getPostPreviewsLatestPagedByPosterId(posterId, pageIndex, pageSize));
+    }
+
+    @GetMapping("/preview/latest/tag/{tagName}")
+    public Result<?> getPostPreviewsLatestPagedByPosterId(
+            @PathVariable(value = "tagName") String tagName,
+            @RequestParam Integer pageIndex,
+            @RequestParam Integer pageSize) {
+        return Result.success(
+                postService.getPostPreviewsLatestPagedByTagName(tagName, pageIndex, pageSize));
+    }
+
     @GetMapping("/preview/poster/{posterId}")
     public Result<?> getPostPreviewsByPosterId(@PathVariable(value = "posterId") Long posterId) {
         return Result.success(postService.getPostPreviewsByPosterId(posterId));

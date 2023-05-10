@@ -11,7 +11,7 @@ const items = reactive(["用户", "标签", "查找"]);
 <template>
   <div class="sidebar">
     <div class="sidebar-area">
-      <v-btn @click="clicked"> New Post </v-btn>
+      <v-btn> New Post </v-btn>
     </div>
 
     <div class="divider-wrap">

@@ -1,6 +1,7 @@
 package com.example.kabesystem.service.impl;
 
 import com.auth0.jwt.interfaces.Claim;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.kabesystem.mapper.UserAccountMapper;
@@ -8,23 +9,29 @@ import com.example.kabesystem.model.UserAccount;
 import com.example.kabesystem.service.UserAccountService;
 import com.example.kabesystem.util.JWTUtil;
 import com.example.kabesystem.util.RedisUtil;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserAccount> implements UserAccountService {
+public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserAccount>
+        implements UserAccountService {
 
     private final RedisUtil redisUtil;
+    private final ResourceLoader resourceLoader;
 
-    public UserAccountServiceImpl(RedisUtil redisUtil) {
+    public UserAccountServiceImpl(RedisUtil redisUtil, ResourceLoader resourceLoader) {
         this.redisUtil = redisUtil;
+        this.resourceLoader = resourceLoader;
     }
 
     @Override
@@ -88,11 +95,26 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
             map.put("code", 465);
             map.put("message", "不是正确的验证码。");
         } else {
-            String md5 = DigestUtils.md5DigestAsHex(userAccount.getPassword().getBytes(StandardCharsets.UTF_8));
+            String md5 =
+                    DigestUtils.md5DigestAsHex(
+                            userAccount.getPassword().getBytes(StandardCharsets.UTF_8));
             userAccount.setPassword(md5);
+
+            Resource resource = resourceLoader.getResource("classpath:static/defaultAvatar.txt");
+            String defaultAvatar = null;
+            try {
+                InputStream inputStream = resource.getInputStream();
+                defaultAvatar = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            userAccount.setAvatar(defaultAvatar);
+
             userAccount.setIsAdmin(false);
             userAccount.setIsUploader(false);
             userAccount.setNickname("Kabe用户_" + userAccount.getUsername());
+
             baseMapper.insert(userAccount);
             map.put("code", 201);
             map.put("message", "OK");
@@ -103,5 +125,38 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
     @Override
     public String getNickname(Long userId) {
         return baseMapper.selectById(userId).getNickname();
+    }
+
+    @Override
+    public boolean modifyPassword(Long userId, String oldPassword, String newPassword) {
+        String oldPasswordMd5 =
+                DigestUtils.md5DigestAsHex(oldPassword.getBytes(StandardCharsets.UTF_8));
+        String newPasswordMd5 =
+                DigestUtils.md5DigestAsHex(newPassword.getBytes(StandardCharsets.UTF_8));
+
+        LambdaQueryWrapper<UserAccount> wrapper = new LambdaQueryWrapper<>();
+        wrapper.select(UserAccount::getId, UserAccount::getPassword).eq(UserAccount::getId, userId);
+
+        UserAccount userAccount = baseMapper.selectOne(wrapper);
+        if (!oldPasswordMd5.equals(userAccount.getPassword())) {
+            return false;
+        }
+
+        userAccount.setPassword(newPasswordMd5);
+        return baseMapper.updateById(userAccount) == 1;
+    }
+
+    @Override
+    public boolean modifyNickname(Long userId, String nickname) {
+        UserAccount userAccount = new UserAccount();
+        userAccount.setId(userId);
+        userAccount.setNickname(nickname);
+        return baseMapper.updateById(userAccount) == 1;
+    }
+
+    @Override
+    public boolean modifyAvatar(Long userId, UserAccount userAccount) {
+        userAccount.setId(userId);
+        return baseMapper.updateById(userAccount) == 1;
     }
 }

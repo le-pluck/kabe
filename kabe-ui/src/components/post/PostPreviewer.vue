@@ -66,7 +66,9 @@ const onPostTagsLoaded = (show: boolean) => {
           <!-- 下一行报错 "chip@3" 不可分配，是由于 vuetify 提供了此功能，但未对 ts 完善导致的。等待开发后续更新。 -->
           <!-- <v-skeleton-loader type="chip@3"></v-skeleton-loader> -->
           <!-- 目前改用数组形式： -->
-          <v-skeleton-loader :type="['chip', 'chip', 'chip', 'chip']"></v-skeleton-loader>
+          <v-skeleton-loader
+            :type="['chip', 'chip', 'chip', 'chip']"
+          ></v-skeleton-loader>
         </template>
       </Suspense>
     </v-card-text>

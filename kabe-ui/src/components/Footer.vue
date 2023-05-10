@@ -33,3 +33,10 @@ const icons = ref([
     <div>{{ new Date().getFullYear() }} — <strong> Kabe </strong></div>
   </v-footer>
 </template>
+
+<style lang="scss" scoped>
+footer {
+  flex-direction: column;
+  text-align: center;
+}
+</style>

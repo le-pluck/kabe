@@ -23,4 +23,10 @@ public interface UserAccountService extends IService<UserAccount> {
     Map<String, Object> createUserAccount(UserAccount userAccount, String verificationCode);
 
     String getNickname(Long userId);
+
+    boolean modifyPassword(Long userId, String oldPassword, String newPassword);
+
+    boolean modifyNickname(Long userId, String nickname);
+
+    boolean modifyAvatar(Long userId, UserAccount userAccount);
 }

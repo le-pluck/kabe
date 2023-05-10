@@ -37,4 +37,9 @@ public class TagController {
     public Result<?> getPostIdsByTag(@PathVariable(value = "name") String name) {
         return Result.success(tagService.getPostIdsByTagName(name));
     }
+
+    @GetMapping("/icon/{tagName}")
+    public Result<?> getIconByTagName(@PathVariable(value = "tagName") String tagName) {
+        return Result.success(tagService.getIconByTagName(tagName));
+    }
 }

@@ -1,14 +1,12 @@
 package com.example.kabesystem.configuration;
 
 import com.example.kabesystem.interceptor.TokenCheckInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * 注册拦截器
- * */
+/** 注册拦截器 */
 @Configuration
 public class TokenCheckInterceptorConfig implements WebMvcConfigurer {
 
@@ -26,7 +24,9 @@ public class TokenCheckInterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/mail/**")
                 .addPathPatterns("/tag/**")
                 .addPathPatterns("/comment/**")
+                .addPathPatterns("/submission/**")
                 .excludePathPatterns("/user/account/token")
+                .excludePathPatterns("/user/account")
                 .excludePathPatterns("/mail/verification");
     }
 }

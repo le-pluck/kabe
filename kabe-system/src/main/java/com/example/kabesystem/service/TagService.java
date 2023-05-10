@@ -15,4 +15,6 @@ public interface TagService extends IService<Tag> {
     List<Long> getPostIdsByTagName(String name);
 
     boolean createPostTags(List<Tag> tags, Long postId);
+
+    String getIconByTagName(String tagName);
 }

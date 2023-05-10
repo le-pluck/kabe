@@ -3,84 +3,109 @@ package com.example.kabesystem.controller;
 import com.example.kabesystem.model.UserAccount;
 import com.example.kabesystem.service.UserAccountService;
 import com.example.kabesystem.util.Result;
+
+import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user/account")
 public class UserAccountController {
-  private final UserAccountService userAccountService;
+    private final UserAccountService userAccountService;
 
-  public UserAccountController(UserAccountService userAccountService) {
-    this.userAccountService = userAccountService;
-  }
-
-  @PostMapping("/token")
-  public Result<?> postToken(@RequestBody UserAccount userAccount) {
-    Map<String, Object> map =
-        userAccountService.verifyPassword(userAccount.getUsername(), userAccount.getPassword());
-    if ((map.get("code")).equals(200)) {
-      return Result.success(userAccountService.issueToken((UserAccount) map.get("userAccount")));
-    } else {
-      return Result.failure((int) map.get("code"), (String) map.get("message"), null);
+    public UserAccountController(UserAccountService userAccountService) {
+        this.userAccountService = userAccountService;
     }
-  }
 
-  @GetMapping("/avatar")
-  public Result<?> getAvatarCurrent(@RequestAttribute Long userId) {
-    Map<String, Object> map = new HashMap<>();
-    map.put("avatar", userAccountService.getAvatar(userId));
-    return Result.success(map);
-  }
+    @PostMapping("/token")
+    public Result<?> postToken(@RequestBody UserAccount userAccount) {
+        Map<String, Object> map =
+                userAccountService.verifyPassword(
+                        userAccount.getUsername(), userAccount.getPassword());
+        if ((map.get("code")).equals(200)) {
+            return Result.success(
+                    userAccountService.issueToken((UserAccount) map.get("userAccount")));
+        } else {
+            return Result.failure((int) map.get("code"), (String) map.get("message"), null);
+        }
+    }
 
-  @GetMapping("/avatar/{id}")
-  public Result<?> getAvatarById(@PathVariable(value = "id") Long id) {
-    Map<String, Object> map = new HashMap<>();
-    map.put("avatar", userAccountService.getAvatar(id));
-    return Result.success(map);
-  }
+    @GetMapping("/avatar")
+    public Result<?> getAvatarCurrent(@RequestAttribute Long userId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("avatar", userAccountService.getAvatar(userId));
+        return Result.success(map);
+    }
 
-  @GetMapping("/info")
-  public Result<?> getInfoCurrent(@RequestAttribute Long userId) {
-    UserAccount userAccount = userAccountService.getInfo(userId);
-    System.out.println("======================== userAccount.toString() ========================");
-    System.out.println(userAccount.toString());
-    return Result.success(userAccount);
-  }
+    @GetMapping("/avatar/{id}")
+    public Result<?> getAvatarById(@PathVariable(value = "id") Long id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("avatar", userAccountService.getAvatar(id));
+        return Result.success(map);
+    }
 
-  @GetMapping("/info/{id}")
-  public Result<?> getInfoById(@PathVariable(value = "id") Long id) {
-    return Result.success(userAccountService.getInfo(id));
-  }
+    @GetMapping("/info")
+    public Result<?> getInfoCurrent(@RequestAttribute Long userId) {
+        UserAccount userAccount = userAccountService.getInfo(userId);
+        System.out.println(
+                "======================== userAccount.toString() ========================");
+        System.out.println(userAccount.toString());
+        return Result.success(userAccount);
+    }
 
-  @PostMapping("")
-  public Result<?> createUserAccount(
-      @RequestBody UserAccount userAccount, @RequestParam String code) {
-    Map<String, Object> map = userAccountService.createUserAccount(userAccount, code);
-    return Result.response((int) map.get("code"), (String) map.get("message"), null);
-  }
+    @GetMapping("/info/{id}")
+    public Result<?> getInfoById(@PathVariable(value = "id") Long id) {
+        return Result.success(userAccountService.getInfo(id));
+    }
 
-  @GetMapping("/nickname/{id}")
-  public Result<?> getNickname(@PathVariable(value = "id") Long id) {
-    return Result.success(userAccountService.getNickname(id));
-  }
+    @PostMapping("")
+    public Result<?> createUserAccount(
+            @RequestBody UserAccount userAccount, @RequestParam String code) {
+        Map<String, Object> map = userAccountService.createUserAccount(userAccount, code);
+        return Result.response((int) map.get("code"), (String) map.get("message"), null);
+    }
 
-  @GetMapping("/id")
-  public Result<?> authenticateToken(@RequestAttribute Long userId) {
-    return Result.success(userId);
-  }
+    @GetMapping("/nickname/{id}")
+    public Result<?> getNickname(@PathVariable(value = "id") Long id) {
+        return Result.success(userAccountService.getNickname(id));
+    }
 
-  @GetMapping("/permission")
-  public Result<?> getPermission(
-      @RequestAttribute Long userId,
-      @RequestAttribute Boolean isUploader,
-      @RequestAttribute Boolean isAdmin) {
-    Map<String, Object> map = new HashMap<>(3);
-    map.put("userId", userId);
-    map.put("isUploader", isUploader);
-    map.put("isAdmin", isAdmin);
+    @GetMapping("/id")
+    public Result<?> authenticateToken(@RequestAttribute Long userId) {
+        return Result.success(userId);
+    }
 
-    return Result.success(map);
-  }
+    @GetMapping("/permission")
+    public Result<?> getPermission(
+            @RequestAttribute Long userId,
+            @RequestAttribute Boolean isUploader,
+            @RequestAttribute Boolean isAdmin) {
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("userId", userId);
+        map.put("isUploader", isUploader);
+        map.put("isAdmin", isAdmin);
+
+        return Result.success(map);
+    }
+
+    @PutMapping("/password")
+    public Result<?> modifyPassword(
+            @RequestAttribute Long userId,
+            @RequestParam String oldPassword,
+            @RequestParam String newPassword) {
+        return Result.success(userAccountService.modifyPassword(userId, oldPassword, newPassword));
+    }
+
+    @PutMapping("/nickname")
+    public Result<?> modifyPassword(@RequestAttribute Long userId, @RequestParam String nickname) {
+        return Result.success(userAccountService.modifyNickname(userId, nickname));
+    }
+
+    @PutMapping("/avatar")
+    public Result<?> modifyAvatar(
+            @RequestAttribute Long userId, @RequestBody UserAccount userAccount) {
+        System.out.println("============== avatar ==============");
+        return Result.success(userAccountService.modifyAvatar(userId, userAccount));
+    }
 }

@@ -8,7 +8,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const emit = defineEmits<{(e: "loaded", show: boolean):void}>();
+const emit = defineEmits<{ (e: "loaded", show: boolean): void }>();
 
 const tags = reactive(await tagApi.getTagsByPostId(props.postId));
 emit("loaded", tags.length > 0);
@@ -18,14 +18,19 @@ emit("loaded", tags.length > 0);
   <v-container>
     <v-row>
       <v-col>
-        <v-btn
+        <router-link
           v-for="(tag, i) in tags"
-          :prepend-icon="tag.icon"
-          variant="outlined"
-          density="comfortable"
+          :to="`/tag/${tag.name}`"
+          class="no-link-color"
         >
-          {{ tag.name }}
-        </v-btn>
+          <v-btn
+            :prepend-icon="tag.icon"
+            variant="outlined"
+            density="comfortable"
+          >
+            {{ tag.name }}
+          </v-btn>
+        </router-link>
       </v-col>
     </v-row>
   </v-container>

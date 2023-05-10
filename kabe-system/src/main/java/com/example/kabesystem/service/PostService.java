@@ -17,6 +17,12 @@ public interface PostService extends IService<Post> {
 
     Map<String, Object> getPostPreviewsLatestPaged(Integer pageIndex, Integer pageSize);
 
+    Map<String, Object> getPostPreviewsLatestPagedByPosterId(
+            Long posterId, Integer pageIndex, Integer pageSize);
+
+    Map<String, Object> getPostPreviewsLatestPagedByTagName(
+            String tagName, Integer pageIndex, Integer pageSize);
+
     List<Post> getPostPreviewsByPosterId(Long posterId);
 
     boolean deletePostById(Long postId, Long userId);

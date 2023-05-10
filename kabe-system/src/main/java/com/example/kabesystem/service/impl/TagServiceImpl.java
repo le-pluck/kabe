@@ -39,7 +39,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     @Override
     public List<Long> getPostIdsByTagName(String name) {
         QueryWrapper<Tag> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("post_id").eq("name", name);
+        queryWrapper.select("DISTINCT post_id").eq("name", name);
         List<Tag> tags = baseMapper.selectList(queryWrapper);
 
         List<Long> postIds = new ArrayList<>();
@@ -62,5 +62,12 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public String getIconByTagName(String tagName) {
+        QueryWrapper<Tag> wrapper = new QueryWrapper<>();
+        wrapper.select("DISTINCT icon").eq("name", tagName);
+        return baseMapper.selectOne(wrapper).getIcon();
     }
 }

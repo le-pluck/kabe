@@ -1,39 +1,33 @@
 <script lang="ts" setup>
-import { reactive, ref, Ref } from "vue";
-import PostViewer from "@/components/post/PostViewer.vue";
+import Sidebar from "@/components/home/sideBar/Sidebar.vue";
 import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 
-interface Props {
-  postId: PostId;
-}
+import { defineAsyncComponent } from "vue";
+
+interface Props {}
 
 const props = defineProps<Props>();
+
+const SubmissionList = defineAsyncComponent(
+  () => import("@/components/admin/SubmissionList.vue")
+);
 </script>
 
 <template>
   <div class="container">
     <Suspense>
       <template #default>
-        <PostViewer :postId="postId"></PostViewer>
+        <SubmissionList></SubmissionList>
       </template>
       <template #fallback>
         <v-skeleton-loader
           :type="[
             'list-item-avatar-two-line',
-            'heading',
-            'subtitle',
-            'paragraph',
-            'paragraph',
-            'image',
-            'paragraph',
-            'paragraph',
-            'paragraph',
-            'button',
-            'text',
-            'chip',
-            'chip',
-            'chip',
-            'button',
+            'list-item-avatar-two-line',
+            'list-item-avatar-two-line',
+            'list-item-avatar-two-line',
+            'list-item-avatar-two-line',
+            'list-item-avatar-two-line',
           ]"
         ></v-skeleton-loader>
       </template>

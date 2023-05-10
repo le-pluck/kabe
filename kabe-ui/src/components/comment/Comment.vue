@@ -176,7 +176,7 @@ const onDeleteClick = async () => {
   }
 }
 .child-comment {
-  background-color: $dynamic-background-low-emphasis;
+  // background-color: $dynamic-background-low-emphasis;
   border: solid #00000000 1px;
   border-radius: 0.5rem;
   padding-bottom: 0.5rem;
