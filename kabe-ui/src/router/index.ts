@@ -11,6 +11,7 @@ import PostExpPage from "@/views/main/PostExpPage.vue";
 import CreatePostPage from "@/views/main/CreatePostPage.vue";
 import UserPage from "@/views/main/UserPage.vue";
 import AdminPage from "@/views/main/AdminPage.vue";
+import TagPage from "@/views/main/TagPage.vue";
 
 import { userAccountApi } from "@/apis";
 
@@ -25,6 +26,7 @@ const routes = [
       { path: "/create-post", component: CreatePostPage },
       { path: "/user/:userId", component: UserPage, props: true },
       { path: "/admin", component: AdminPage },
+      { path: "/tag/:tagName", component: TagPage, props: true },
     ],
   },
   { path: "/sign-in", component: SignInPage },

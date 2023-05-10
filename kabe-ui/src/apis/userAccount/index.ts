@@ -11,16 +11,14 @@ const login = (
  */
 const getUserId = async () => {
   return axios.get<number>("/user/account/id");
-}
+};
 
 /**
  * @description 验证 token 并获取 Permission
  */
 const getPermission = async () => {
   return axios.get<Permission>("/user/account/permission");
-}
-
-
+};
 
 const getAvatar = (userId?: number) => {
   const url =
@@ -57,6 +55,18 @@ const getNickname = (userId: number) => {
   return axios.get<string>(`/user/account/nickname/${userId}`);
 };
 
+const modifyPassword = async (oldPassword: string, newPassword: string) => {
+  return axios.put<boolean>("/user/account/password", null, {
+    params: { oldPassword, newPassword },
+  });
+};
+
+const modifyNickname = async (nickname: string) => {
+  return axios.put<boolean>("/user/account/nickname", null, {
+    params: { nickname },
+  });
+};
+
 export default {
   login,
   getUserId,
@@ -66,4 +76,6 @@ export default {
   sendVerificationMail,
   createUserAccount,
   getNickname,
+  modifyPassword,
+  modifyNickname,
 };

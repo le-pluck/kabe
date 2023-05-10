@@ -5,8 +5,13 @@ import PostPreviewer from "@/components/post/PostPreviewer.vue";
 import { reactive, ref } from "vue";
 
 import PostPreviewerPagedList from "./PostPreviewerPagedList.vue";
+import { store } from "@/store";
 
-interface Props {}
+interface Props {
+  userId: number;
+}
+
+const props = defineProps<Props>();
 
 const pagination = reactive<PaginationRequester>({
   pageIndex: 1,
@@ -14,18 +19,19 @@ const pagination = reactive<PaginationRequester>({
   sortingCriteria: "latest",
 });
 
-// TODO: 选择排序方式
 const postPreviewsPaged = ref<PostPreviewsPaged>(
-  await postApi.getPostPreviewsLatestPaged(
+  await postApi.getPostPreviewsLatestPagedByPosterId(
+    props.userId,
     pagination.pageIndex,
     pagination.pageSize
   )
 );
 
 const onPageChange = async () => {
-  postPreviewsPaged.value = await postApi.getPostPreviewsLatestPaged(
+  postPreviewsPaged.value = await postApi.getPostPreviewsLatestPagedByPosterId(
+    props.userId,
     pagination.pageIndex,
-    pagination.pageSize
+    pagination.pageSize,
   );
 };
 </script>

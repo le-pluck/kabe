@@ -18,17 +18,23 @@ const props = defineProps<Props>();
       </template>
       <template #fallback>
         <v-skeleton-loader
-          :type="`list-item-avatar-two-line, 
-                  heading, 
-                  subtitle, 
-                  paragraph@2,
-                  image,
-                  paragraph@3,
-                  button, 
-                  text, 
-                  chip@3, 
-                  button
-           `"
+          :type="[
+            'list-item-avatar-two-line',
+            'heading',
+            'subtitle',
+            'paragraph',
+            'paragraph',
+            'image',
+            'paragraph',
+            'paragraph',
+            'paragraph',
+            'button',
+            'text',
+            'chip',
+            'chip',
+            'chip',
+            'button',
+          ]"
         ></v-skeleton-loader>
       </template>
     </Suspense>

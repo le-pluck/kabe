@@ -18,10 +18,8 @@ $color-hover: $core-color;
 $link-color: $core-color;
 $link-color-hover: #3720e7;
 
-$lowest-emphasis-opacity: 0.0;
-
+$lowest-emphasis-opacity: 0.05;
 $dynamic-background-low-emphasis: rgba(var(--v-theme-on-background), $lowest-emphasis-opacity);
-
 
 // padding
 

@@ -17,9 +17,14 @@ const createPostTags = (tags: Tag[], postId: PostId) => {
   return axios.post<boolean>(`/tag/${postId}`, tags);
 };
 
+const getIconByTagName = async (tagName: string) => {
+  return await axios.get<string>(`/tag/icon/${tagName}`);
+};
+
 export default {
   getTagsByPostId,
   getTags,
   getPostIdsByTag,
   createPostTags,
+  getIconByTagName,
 };
