@@ -181,6 +181,7 @@ const onThemeChange = (theme: Theme) => {
 .main {
   display: flex;
   flex-direction: row-reverse;
+  background-color: $dynamic-background-low-emphasis;
   .card-wrap {
     max-width: 1000px;
     flex: 1 0 auto;

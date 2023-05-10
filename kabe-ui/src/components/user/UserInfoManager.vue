@@ -134,6 +134,41 @@ const onPasswordModify = async () => {
     showAlert.value = true;
   }
 };
+
+const avatarBtnIcon = ref<"" | "mdi-plus">("");
+const avatarBtnHover = (over: boolean) => {
+  if (over) {
+    avatarBtnIcon.value = "mdi-plus";
+  } else {
+    avatarBtnIcon.value = "";
+  }
+};
+const onAvatarBtnClick = () => {
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.click();
+  let file;
+  fileInput.addEventListener("change", (event) => {
+    if (event.target != null && event.target instanceof HTMLInputElement) {
+      let files = (event.target as HTMLInputElement)?.files;
+      if (files != null && files.length > 0) {
+        file = files[0];
+        let reader = new FileReader();
+        reader.onloadend = async () => {
+          let base64String = reader.result as string;
+          // 在这里使用 base64String
+          const success = await userAccountApi.modifyAvatar(base64String);
+          if (success) {
+            setTimeout(() => {
+              location.reload();
+            }, 100);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  });
+};
 </script>
 
 <template>
@@ -146,7 +181,23 @@ const onPasswordModify = async () => {
             color="surface-variant"
             :image="userInfo.avatar"
             size="200"
+            class="avatar"
           ></v-avatar>
+          <v-btn
+            icon=""
+            variant="text"
+            size="200"
+            class="btn-on-avatar"
+            @mouseover="avatarBtnHover(true)"
+            @mouseout="avatarBtnHover(false)"
+            @click="onAvatarBtnClick"
+          >
+            <template #default>
+              <v-icon size="160" color="primary">
+                {{ avatarBtnIcon }}
+              </v-icon>
+            </template>
+          </v-btn>
         </v-col>
       </v-row>
 
@@ -315,9 +366,14 @@ const onPasswordModify = async () => {
   right: 0;
   border-radius: 1rem;
 }
-.v-avatar {
+.avatar {
   margin: 5rem auto;
 }
+.btn-on-avatar {
+  position: absolute;
+  margin: 5rem auto;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;

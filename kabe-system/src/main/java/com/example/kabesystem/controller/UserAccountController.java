@@ -101,4 +101,11 @@ public class UserAccountController {
     public Result<?> modifyPassword(@RequestAttribute Long userId, @RequestParam String nickname) {
         return Result.success(userAccountService.modifyNickname(userId, nickname));
     }
+
+    @PutMapping("/avatar")
+    public Result<?> modifyAvatar(
+            @RequestAttribute Long userId, @RequestBody UserAccount userAccount) {
+        System.out.println("============== avatar ==============");
+        return Result.success(userAccountService.modifyAvatar(userId, userAccount));
+    }
 }

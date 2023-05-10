@@ -10,9 +10,13 @@ import com.example.kabesystem.service.UserAccountService;
 import com.example.kabesystem.util.JWTUtil;
 import com.example.kabesystem.util.RedisUtil;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +27,11 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         implements UserAccountService {
 
     private final RedisUtil redisUtil;
+    private final ResourceLoader resourceLoader;
 
-    public UserAccountServiceImpl(RedisUtil redisUtil) {
+    public UserAccountServiceImpl(RedisUtil redisUtil, ResourceLoader resourceLoader) {
         this.redisUtil = redisUtil;
+        this.resourceLoader = resourceLoader;
     }
 
     @Override
@@ -93,9 +99,22 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
                     DigestUtils.md5DigestAsHex(
                             userAccount.getPassword().getBytes(StandardCharsets.UTF_8));
             userAccount.setPassword(md5);
+
+            Resource resource = resourceLoader.getResource("classpath:static/defaultAvatar.txt");
+            String defaultAvatar = null;
+            try {
+                InputStream inputStream = resource.getInputStream();
+                defaultAvatar = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            userAccount.setAvatar(defaultAvatar);
+
             userAccount.setIsAdmin(false);
             userAccount.setIsUploader(false);
             userAccount.setNickname("Kabe用户_" + userAccount.getUsername());
+
             baseMapper.insert(userAccount);
             map.put("code", 201);
             map.put("message", "OK");
@@ -132,6 +151,12 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         UserAccount userAccount = new UserAccount();
         userAccount.setId(userId);
         userAccount.setNickname(nickname);
+        return baseMapper.updateById(userAccount) == 1;
+    }
+
+    @Override
+    public boolean modifyAvatar(Long userId, UserAccount userAccount) {
+        userAccount.setId(userId);
         return baseMapper.updateById(userAccount) == 1;
     }
 }

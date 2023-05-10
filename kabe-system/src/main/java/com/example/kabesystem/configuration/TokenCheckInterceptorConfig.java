@@ -26,6 +26,7 @@ public class TokenCheckInterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/comment/**")
                 .addPathPatterns("/submission/**")
                 .excludePathPatterns("/user/account/token")
+                .excludePathPatterns("/user/account")
                 .excludePathPatterns("/mail/verification");
     }
 }

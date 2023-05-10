@@ -12,6 +12,10 @@ import { onUnmounted } from "vue";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
+import logoOnDark from "@/assets/logo_on_dark.png";
+import logoOnLight from "@/assets/logo_on_light.png";
+import { store } from "@/store";
+
 const router = useRouter();
 
 type ValidationResult = string | boolean;
@@ -21,7 +25,9 @@ type ValidationRule =
   | ((value: any) => ValidationResult)
   | ((value: any) => PromiseLike<ValidationResult>);
 
-const registerStep = ref("register-account");
+const registerStep = ref<
+  "register-account" | "verify-code" | "register-success"
+>("register-account");
 
 const newAccount = reactive({
   email: "",
@@ -251,6 +257,19 @@ const afterEmailSend = () => {
   }, 1000);
 };
 
+const getSrcByTheme = (theme: Theme) => {
+  switch (theme) {
+    case "dark":
+      return logoOnDark;
+    case "light":
+      return logoOnLight;
+  }
+};
+const logoSrc = ref<string>(getSrcByTheme(store.theme.get()));
+const onThemeChange = (theme: Theme) => {
+  logoSrc.value = getSrcByTheme(theme);
+};
+
 onMounted(() => {
   afterEmailSend();
 });
@@ -270,7 +289,7 @@ onUnmounted(() => {
           <v-container>
             <v-row align="center">
               <v-col>
-                <div class="logo-text">KABE</div>
+                <v-img :src="logoSrc" class="logo"></v-img>
               </v-col>
             </v-row>
             <v-form
@@ -307,8 +326,10 @@ onUnmounted(() => {
                     label="设定密码"
                     required
                     :type="showPassword.pass ? 'text' : 'password'"
-                    :append-icon="showPassword.pass ? 'mdi-eye' : 'mdi-eye-off'"
-                    @click:append="showPassword.pass = !showPassword.pass"
+                    :append-inner-icon="
+                      showPassword.pass ? 'mdi-eye' : 'mdi-eye-off'
+                    "
+                    @click:append-inner="showPassword.pass = !showPassword.pass"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -321,10 +342,10 @@ onUnmounted(() => {
                     label="重复密码"
                     required
                     :type="showPassword.passAgain ? 'text' : 'password'"
-                    :append-icon="
+                    :append-inner-icon="
                       showPassword.passAgain ? 'mdi-eye' : 'mdi-eye-off'
                     "
-                    @click:append="
+                    @click:append-inner="
                       showPassword.passAgain = !showPassword.passAgain
                     "
                   ></v-text-field>
@@ -365,7 +386,9 @@ onUnmounted(() => {
                   <router-link to="/sign-in"> 去登录 </router-link>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <ThemeLightDarkSwitcher></ThemeLightDarkSwitcher>
+                  <ThemeLightDarkSwitcher
+                    @theme-change="onThemeChange"
+                  ></ThemeLightDarkSwitcher>
                 </v-col>
               </v-row>
             </v-form>
@@ -470,6 +493,8 @@ onUnmounted(() => {
 .main {
   display: flex;
   justify-content: space-around;
+  background-color: $dynamic-background-low-emphasis;
+
   .card-wrap {
     max-width: 1000px;
     flex: 1 0 auto;
@@ -481,12 +506,14 @@ onUnmounted(() => {
       max-width: 500px;
       .card-inside {
         padding: $area-padding;
-        .logo-text {
+        .logo {
           text-align: center;
           font-size: 30px;
           color: #91a1f7;
           font-weight: bold;
+          margin: auto;
           margin-bottom: 30px;
+          width: 70%;
         }
         a {
           text-decoration: none;

@@ -67,6 +67,11 @@ const modifyNickname = async (nickname: string) => {
   });
 };
 
+const modifyAvatar = async (avatar: string) => {
+  const body: Pick<UserAccount, "avatar"> = { avatar };
+  return axios.put<boolean>("/user/account/avatar", body);
+};
+
 export default {
   login,
   getUserId,
@@ -78,4 +83,5 @@ export default {
   getNickname,
   modifyPassword,
   modifyNickname,
+  modifyAvatar,
 };

@@ -27,4 +27,6 @@ public interface UserAccountService extends IService<UserAccount> {
     boolean modifyPassword(Long userId, String oldPassword, String newPassword);
 
     boolean modifyNickname(Long userId, String nickname);
+
+    boolean modifyAvatar(Long userId, UserAccount userAccount);
 }
